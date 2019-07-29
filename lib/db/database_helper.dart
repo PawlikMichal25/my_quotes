@@ -1,8 +1,8 @@
 import 'package:my_quotes/db/tables.dart';
-import 'package:sqflite/sqflite.dart' as Sqflite;
+import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper {
-  final Sqflite.Database db;
+  final Database db;
 
   DatabaseHelper({this.db});
 

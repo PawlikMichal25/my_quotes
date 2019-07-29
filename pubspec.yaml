@@ -20,6 +20,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  get_it: 1.0.3+2
   sqflite: ^1.1.6+3
   path_provider: ^1.2.0
 

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'db/Database.dart';
-import 'package:my_quotes/model/author.dart';
+
+import 'db/dao.dart';
+import 'injection/service_location.dart';
+import 'model/author.dart';
 
 class MyQuotesApp extends StatelessWidget {
   @override
@@ -42,8 +44,7 @@ class MyHomePage extends StatelessWidget {
   }
 
   void _try() async {
-    final Database database = Database.instance;
-    final dao = await database.getDao();
+    final dao = sl.get<Dao>();
     final author1 = Author(firstName: "First", lastName: "Second");
     final author2 = Author(firstName: "Third", lastName: "Fourth");
 

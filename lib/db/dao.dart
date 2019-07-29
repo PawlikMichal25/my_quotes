@@ -1,13 +1,13 @@
 import 'package:my_quotes/db/tables.dart';
-import 'package:sqflite/sqlite_api.dart' as Sqflite;
+import 'package:sqflite/sqlite_api.dart';
 
 import 'package:my_quotes/model/author.dart';
 import 'package:my_quotes/model/quote.dart';
 
 class Dao {
-  final Sqflite.Database db;
+  final Database db;
 
-  Dao({this.db});
+  Dao(this.db);
 
   Future<Author> addAuthor(Author author) async {
     Map<String, dynamic> row = {
