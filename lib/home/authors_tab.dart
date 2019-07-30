@@ -23,6 +23,7 @@ class _AuthorsTabState extends State<AuthorsTab> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<Resource<List<Author>>>(
+        initialData: Resource.loading(),
         stream: _authorsBloc.authorsStream,
         builder: (_, AsyncSnapshot<Resource<List<Author>>> snapshot) {
           final resource = snapshot.data;
