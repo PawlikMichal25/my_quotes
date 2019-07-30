@@ -5,7 +5,7 @@ import 'package:my_quotes/home/authors_bloc.dart';
 
 GetIt sl = GetIt();
 
-void setupServiceLocator() async {
+Future<void> setupServiceLocator() async {
   await _setupDatabase();
   _setupBlocs();
 }
