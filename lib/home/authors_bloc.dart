@@ -1,6 +1,6 @@
 import 'package:my_quotes/db/dao.dart';
 import 'package:my_quotes/model/author.dart';
-import 'package:my_quotes/utils/Bloc.dart';
+import 'package:my_quotes/utils/bloc.dart';
 import 'package:my_quotes/utils/resource.dart';
 import 'package:rxdart/rxdart.dart';
 

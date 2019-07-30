@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_quotes/injection/service_location.dart';
 import 'package:my_quotes/model/author.dart';
 import 'package:my_quotes/utils/resource.dart';
+import 'package:my_quotes/utils/styles.dart';
 
 import 'authors_bloc.dart';
 
@@ -47,8 +48,12 @@ class _AuthorsTabState extends State<AuthorsTab> {
   }
 
   Widget _buildAuthorsList(List<Author> authors) {
-    return ListView.builder(
+    return ListView.separated(
       itemCount: authors.length,
+      separatorBuilder: (context, index) => Divider(
+        height: 0.0,
+        color: Styles.darkGrey,
+      ),
       itemBuilder: (BuildContext context, int index) {
         final author = authors[index];
 
@@ -58,9 +63,17 @@ class _AuthorsTabState extends State<AuthorsTab> {
   }
 
   Widget _buildAuthorTile(Author author) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Text("${author.firstName} ${author.lastName}"),
+    return Material(
+      child: InkWell(
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Text(
+            "${author.firstName} ${author.lastName}",
+            style: TextStyle(color: Colors.black),
+          ),
+        ),
+        onTap: () {},
+      ),
     );
   }
 }
