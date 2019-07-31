@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_quotes/commons/resources/my_quotes_icons.dart';
 import 'package:my_quotes/tabs/quotes/quotes_tab.dart';
 
 import 'package:my_quotes/tabs/authors/authors_tab.dart';
@@ -28,8 +29,8 @@ class _HomeScreenState extends State<HomeScreen>
         bottom: TabBar(
           controller: _tabController,
           tabs: [
-            Tab(icon: Icon(Icons.format_quote)),
-            Tab(icon: Icon(Icons.people)),
+            Tab(icon: Icon(MyQuotesIcons.quotes)),
+            Tab(icon: Icon(MyQuotesIcons.authors)),
           ],
         ),
       ),
