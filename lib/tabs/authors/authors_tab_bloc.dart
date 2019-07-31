@@ -4,14 +4,14 @@ import 'package:my_quotes/utils/bloc.dart';
 import 'package:my_quotes/utils/resource.dart';
 import 'package:rxdart/rxdart.dart';
 
-class AuthorsBloc extends Bloc {
+class AuthorsTabBloc extends Bloc {
   final Dao dao;
 
   final _authors = BehaviorSubject<Resource<List<Author>>>();
 
   Stream<Resource<List<Author>>> get authorsStream => _authors.stream;
 
-  AuthorsBloc({this.dao}) : assert(dao != null);
+  AuthorsTabBloc({this.dao}) : assert(dao != null);
 
   @override
   void dispose() {

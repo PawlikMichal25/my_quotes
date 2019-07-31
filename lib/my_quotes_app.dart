@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:my_quotes/home/home_screen.dart';
+import 'package:my_quotes/screens/home/home_screen.dart';
 
 class MyQuotesApp extends StatelessWidget {
   @override

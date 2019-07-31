@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:my_quotes/db/dao.dart';
 import 'package:my_quotes/db/app_database.dart';
-import 'package:my_quotes/home/authors_bloc.dart';
+import 'package:my_quotes/tabs/authors/authors_tab_bloc.dart';
 
 GetIt sl = GetIt();
 
@@ -20,7 +20,7 @@ Future<void> _setupDatabase() async {
 }
 
 void _setupBlocs() {
-  sl.registerFactory<AuthorsBloc>(() {
-    return AuthorsBloc(dao: sl.get<Dao>());
+  sl.registerFactory<AuthorsTabBloc>(() {
+    return AuthorsTabBloc(dao: sl.get<Dao>());
   });
 }

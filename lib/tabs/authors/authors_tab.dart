@@ -4,7 +4,7 @@ import 'package:my_quotes/model/author.dart';
 import 'package:my_quotes/utils/resource.dart';
 import 'package:my_quotes/utils/styles.dart';
 
-import 'authors_bloc.dart';
+import 'package:my_quotes/tabs/authors/authors_tab_bloc.dart';
 
 class AuthorsTab extends StatefulWidget {
   @override
@@ -12,20 +12,26 @@ class AuthorsTab extends StatefulWidget {
 }
 
 class _AuthorsTabState extends State<AuthorsTab> {
-  AuthorsBloc _authorsBloc;
+  AuthorsTabBloc _authorsTabBloc;
 
   @override
   void initState() {
     super.initState();
-    _authorsBloc = sl.get<AuthorsBloc>();
-    _authorsBloc.loadAuthors();
+    _authorsTabBloc = sl.get<AuthorsTabBloc>();
+    _authorsTabBloc.loadAuthors();
+  }
+
+  @override
+  void dispose() {
+    _authorsTabBloc.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<Resource<List<Author>>>(
         initialData: Resource.loading(),
-        stream: _authorsBloc.authorsStream,
+        stream: _authorsTabBloc.authorsStream,
         builder: (_, AsyncSnapshot<Resource<List<Author>>> snapshot) {
           final resource = snapshot.data;
 

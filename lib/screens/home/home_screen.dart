@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_quotes/home/quotes_tab.dart';
+import 'package:my_quotes/tabs/quotes/quotes_tab.dart';
 
-import 'authors_tab.dart';
+import 'package:my_quotes/tabs/authors/authors_tab.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
