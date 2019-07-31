@@ -37,6 +37,75 @@ class Dao {
     );
   }
 
+  Future<List<Quote>> getQuotes(int authorId) async {
+    if (authorId == null) {
+      return getAllQuotes();
+    } else {
+      return getQuotesWithAuthorId(authorId);
+    }
+  }
+
+  Future<List<Quote>> getAllQuotes() async {
+    final query = '''
+    SELECT ${Tables.quoteColumnId}, ${Tables.quoteColumnContent}, 
+    ${Tables.authorTableName}.${Tables.authorColumnID}, ${Tables.authorColumnFirstName}, ${Tables.authorColumnLastName}
+    FROM ${Tables.quoteTableName}
+    INNER JOIN ${Tables.authorTableName}
+    ON ${Tables.quoteTableName}.${Tables.quoteColumnAuthorId} == ${Tables.authorTableName}.${Tables.authorColumnID}
+    ''';
+
+    final results = await db.rawQuery(query);
+
+    return results.map(
+      (row) {
+        final author = Author(
+          id: row[Tables.authorColumnID],
+          firstName: row[Tables.authorColumnFirstName],
+          lastName: row[Tables.authorColumnLastName],
+        );
+
+        final quote = Quote(
+          id: row[Tables.quoteColumnId],
+          author: author,
+          content: row[Tables.quoteColumnContent],
+        );
+
+        return quote;
+      },
+    ).toList();
+  }
+
+  Future<List<Quote>> getQuotesWithAuthorId(int authorId) async {
+    final query = '''
+    SELECT ${Tables.quoteColumnId}, ${Tables.quoteColumnContent}, 
+    ${Tables.authorTableName}.${Tables.authorColumnID}, ${Tables.authorColumnFirstName}, ${Tables.authorColumnLastName}
+    FROM ${Tables.quoteTableName}
+    INNER JOIN ${Tables.authorTableName}
+    ON ${Tables.quoteTableName}.${Tables.quoteColumnAuthorId} == ${Tables.authorTableName}.${Tables.authorColumnID} 
+    WHERE ${Tables.quoteTableName}.${Tables.quoteColumnAuthorId} == $authorId
+    ''';
+
+    final results = await db.rawQuery(query);
+
+    return results.map(
+      (row) {
+        final author = Author(
+          id: row[Tables.authorColumnID],
+          firstName: row[Tables.authorColumnFirstName],
+          lastName: row[Tables.authorColumnLastName],
+        );
+
+        final quote = Quote(
+          id: row[Tables.quoteColumnId],
+          author: author,
+          content: row[Tables.quoteColumnContent],
+        );
+
+        return quote;
+      },
+    ).toList();
+  }
+
   Future<List<Author>> getAllAuthors() async {
     final results = await db.query(Tables.authorTableName);
     return results

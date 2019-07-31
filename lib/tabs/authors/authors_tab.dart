@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:my_quotes/injection/service_location.dart';
 import 'package:my_quotes/model/author.dart';
-import 'package:my_quotes/utils/resource.dart';
-import 'package:my_quotes/utils/styles.dart';
+import 'package:my_quotes/commons/resource.dart';
+import 'package:my_quotes/resources/dimens.dart';
+import 'package:my_quotes/resources/styles.dart';
 
 import 'package:my_quotes/tabs/authors/authors_tab_bloc.dart';
 
@@ -72,10 +73,13 @@ class _AuthorsTabState extends State<AuthorsTab> {
     return Material(
       child: InkWell(
         child: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: const EdgeInsets.all(Dimens.defaultSpacing),
           child: Text(
             "${author.firstName} ${author.lastName}",
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 16.0,
+            ),
           ),
         ),
         onTap: () {},
