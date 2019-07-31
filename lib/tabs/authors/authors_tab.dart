@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:my_quotes/commons/resources/dimens.dart';
+import 'package:my_quotes/commons/resources/styles.dart';
 import 'package:my_quotes/injection/service_location.dart';
 import 'package:my_quotes/model/author.dart';
-import 'package:my_quotes/commons/resource.dart';
-import 'package:my_quotes/resources/dimens.dart';
-import 'package:my_quotes/resources/styles.dart';
+import 'package:my_quotes/commons/architecture/resource.dart';
 
 import 'package:my_quotes/tabs/authors/authors_tab_bloc.dart';
 

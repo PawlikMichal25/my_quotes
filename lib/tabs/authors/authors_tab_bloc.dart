@@ -1,7 +1,7 @@
 import 'package:my_quotes/db/dao.dart';
 import 'package:my_quotes/model/author.dart';
-import 'package:my_quotes/commons/bloc.dart';
-import 'package:my_quotes/commons/resource.dart';
+import 'package:my_quotes/commons/architecture/bloc.dart';
+import 'package:my_quotes/commons/architecture/resource.dart';
 import 'package:rxdart/rxdart.dart';
 
 class AuthorsTabBloc extends Bloc {

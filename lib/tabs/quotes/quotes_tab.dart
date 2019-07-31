@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:my_quotes/commons/resources/dimens.dart';
 import 'package:my_quotes/injection/service_location.dart';
 import 'package:my_quotes/model/quote.dart';
-import 'package:my_quotes/commons/resource.dart';
-import 'package:my_quotes/resources/dimens.dart';
+import 'package:my_quotes/commons/architecture/resource.dart';
 
 import 'quotes_tab_bloc.dart';
 import 'quotes_tab_bloc_provider.dart';
