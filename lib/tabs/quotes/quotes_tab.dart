@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_quotes/commons/resources/dimens.dart';
 import 'package:my_quotes/injection/service_location.dart';
+import 'package:my_quotes/model/author.dart';
 import 'package:my_quotes/model/quote.dart';
 import 'package:my_quotes/commons/architecture/resource.dart';
 
@@ -8,6 +9,10 @@ import 'quotes_tab_bloc.dart';
 import 'quotes_tab_bloc_provider.dart';
 
 class QuotesTab extends StatefulWidget {
+  final Author author;
+
+  QuotesTab({this.author});
+
   @override
   _QuotesTabState createState() => _QuotesTabState();
 }
@@ -19,7 +24,7 @@ class _QuotesTabState extends State<QuotesTab> {
   void initState() {
     super.initState();
     final blocProvider = sl.get<QuotesTabBlocProvider>();
-    _quotesTabBloc = blocProvider.get();
+    _quotesTabBloc = blocProvider.get(authorId: widget.author?.id);
     _quotesTabBloc.loadQuotes();
   }
 

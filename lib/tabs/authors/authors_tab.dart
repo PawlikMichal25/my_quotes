@@ -4,6 +4,7 @@ import 'package:my_quotes/commons/resources/styles.dart';
 import 'package:my_quotes/injection/service_location.dart';
 import 'package:my_quotes/model/author.dart';
 import 'package:my_quotes/commons/architecture/resource.dart';
+import 'package:my_quotes/screens/author/author_screen.dart';
 
 import 'package:my_quotes/tabs/authors/authors_tab_bloc.dart';
 
@@ -82,8 +83,15 @@ class _AuthorsTabState extends State<AuthorsTab> {
             ),
           ),
         ),
-        onTap: () {},
+        onTap: () => _openAuthorScreen(author, context),
       ),
+    );
+  }
+
+  _openAuthorScreen(Author author, BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => AuthorScreen(author: author)),
     );
   }
 }
