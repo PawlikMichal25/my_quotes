@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_quotes/model/author.dart';
 import 'package:my_quotes/tabs/quotes/quotes_tab.dart';

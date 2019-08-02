@@ -118,4 +118,20 @@ class Dao {
         )
         .toList();
   }
+
+  Future<int> getIdOfAuthorWith({String firstName, String lastName}) async {
+    final results = await db.query(
+      Tables.authorTableName,
+      columns: [Tables.authorColumnID],
+      where:
+          "${Tables.authorColumnFirstName} = ? AND ${Tables.authorColumnLastName} = ?",
+      whereArgs: [firstName, lastName],
+    );
+
+    if (results.length == 1) {
+      return results[0][Tables.authorColumnID];
+    } else {
+      return -1;
+    }
+  }
 }

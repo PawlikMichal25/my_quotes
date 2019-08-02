@@ -83,12 +83,12 @@ class _AuthorsTabState extends State<AuthorsTab> {
             ),
           ),
         ),
-        onTap: () => _openAuthorScreen(author, context),
+        onTap: () => _openAuthorScreen(author),
       ),
     );
   }
 
-  _openAuthorScreen(Author author, BuildContext context) {
+  _openAuthorScreen(Author author) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => AuthorScreen(author: author)),

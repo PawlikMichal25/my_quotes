@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_quotes/commons/resources/my_quotes_icons.dart';
+import 'package:my_quotes/screens/add_author/add_author_screen.dart';
 import 'package:my_quotes/tabs/quotes/quotes_tab.dart';
 
 import 'package:my_quotes/tabs/authors/authors_tab.dart';
@@ -18,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen>
   void initState() {
     super.initState();
     _tabController = TabController(vsync: this, length: 2);
-    _tabController.animation.addListener(onTabChanged);
+    _tabController.animation.addListener(_onTabChanged);
   }
 
   @override
@@ -44,13 +45,13 @@ class _HomeScreenState extends State<HomeScreen>
       floatingActionButton: index == 0
           ? FloatingActionButton(
               child: Icon(Icons.add),
-              onPressed: () {},
+              onPressed: () => _onFABClicked(),
             )
           : null,
     );
   }
 
-  void onTabChanged() {
+  void _onTabChanged() {
     final aniValue = _tabController.animation.value;
     if (aniValue > 0.5 && index != 1) {
       setState(() {
@@ -61,5 +62,12 @@ class _HomeScreenState extends State<HomeScreen>
         index = 0;
       });
     }
+  }
+
+  void _onFABClicked() async {
+    final author = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => AddAuthorScreen()),
+    );
   }
 }

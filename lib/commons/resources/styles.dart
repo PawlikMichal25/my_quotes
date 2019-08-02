@@ -9,12 +9,16 @@ class Styles {
     primaryColorBrightness: Brightness.dark,
     accentColor: accentColor,
     accentColorBrightness: Brightness.dark,
-    buttonColor: Colors.blue,
+    buttonTheme: _buttonTheme,
     textSelectionColor: Colors.blue[200],
     textSelectionHandleColor: Colors.orange[800],
     indicatorColor: Colors.white,
     floatingActionButtonTheme: _floatingActionButtonTheme,
   );
+
+  static final _buttonTheme = ThemeData.dark().buttonTheme.copyWith(
+        buttonColor: primaryColor,
+      );
 
   static final _floatingActionButtonTheme =
       ThemeData.light().floatingActionButtonTheme.copyWith(
