@@ -1,13 +1,17 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class Toast {
-  static void show(
+  static void show({
+    @required String message,
+    @required BuildContext context,
     Icon icon,
-    String message,
-    BuildContext context, {
-    Color backgroundColor,
+    Color backgroundColor = const Color(0xFF424242),
     Color textColor = Colors.white,
   }) {
+    assert(message != null);
+    assert(context != null);
+
     _show(icon, message, context, backgroundColor, textColor);
   }
 
@@ -99,24 +103,35 @@ class _ToastState extends State<_Toast> with SingleTickerProviderStateMixin {
         ),
         margin: const EdgeInsets.symmetric(horizontal: 20),
         padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            widget.icon,
-            Flexible(
-              child: Padding(
-                padding:
-                    const EdgeInsets.only(left: 4.0),
-                child: Text(
-                  widget.message,
-                  softWrap: true,
-                  style: TextStyle(fontSize: 15, color: widget.textColor),
-                ),
-              ),
-            ),
-          ],
-        ),
+        child: widget.icon == null ? _buildTextOnly() : _buildTextWithIcon(),
       ),
+    );
+  }
+
+  Widget _buildTextOnly() {
+    return Text(
+      widget.message,
+      softWrap: true,
+      style: TextStyle(fontSize: 15, color: widget.textColor),
+    );
+  }
+
+  Widget _buildTextWithIcon() {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        widget.icon,
+        Flexible(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 4.0),
+            child: Text(
+              widget.message,
+              softWrap: true,
+              style: TextStyle(fontSize: 15, color: widget.textColor),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

@@ -35,6 +35,7 @@ class _AddAuthorScreenState extends State<AddAuthorScreen> {
   void dispose() {
     _addAuthorBloc.dispose();
     _firstNameController.dispose();
+    _lastNameController.dispose();
     super.dispose();
   }
 
@@ -125,18 +126,18 @@ class _AddAuthorScreenState extends State<AddAuthorScreen> {
 
   void _showSuccessToast(String message) {
     Toast.show(
-      Icon(Icons.done, color: Colors.white),
-      message,
-      context,
+      message: message,
+      context: context,
+      icon: Icon(Icons.done, color: Colors.white),
       backgroundColor: Colors.green,
     );
   }
 
   void _showFailureToast(String message) {
     Toast.show(
-      Icon(Icons.close, color: Colors.white),
-      message,
-      context,
+      message: message,
+      context: context,
+      icon: Icon(Icons.close, color: Colors.white),
       backgroundColor: Colors.red,
     );
   }
