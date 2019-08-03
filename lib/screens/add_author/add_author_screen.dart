@@ -11,8 +11,6 @@ class AddAuthorScreen extends StatefulWidget {
 }
 
 class _AddAuthorScreenState extends State<AddAuthorScreen> {
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
-
   AddAuthorBloc _addAuthorBloc;
 
   bool _firstNameValid = true;
@@ -42,7 +40,6 @@ class _AddAuthorScreenState extends State<AddAuthorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
       appBar: AppBar(
         title: Text('Add author'),
       ),

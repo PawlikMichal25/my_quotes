@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_quotes/commons/resources/dimens.dart';
+import 'package:my_quotes/commons/utils/presentation_formatter.dart';
 import 'package:my_quotes/injection/service_location.dart';
 import 'package:my_quotes/model/author.dart';
 import 'package:my_quotes/model/quote.dart';
@@ -92,7 +93,7 @@ class _QuotesTabState extends State<QuotesTab> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text("${quote.author.firstName} ${quote.author.lastName}"),
+                Text(PresentationFormatter.formatAuthor(quote.author)),
               ],
             ),
           ],

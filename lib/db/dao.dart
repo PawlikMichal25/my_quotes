@@ -119,6 +119,23 @@ class Dao {
         .toList();
   }
 
+  Future<List<Author>> getAllAuthorsOrdered() async {
+    final results = await db.query(
+      Tables.authorTableName,
+      orderBy:
+          "${Tables.authorColumnFirstName}, ${Tables.authorColumnLastName}",
+    );
+    return results
+        .map(
+          (row) => Author(
+            id: row[Tables.authorColumnID],
+            firstName: row[Tables.authorColumnFirstName],
+            lastName: row[Tables.authorColumnLastName],
+          ),
+        )
+        .toList();
+  }
+
   Future<int> getIdOfAuthorWith({String firstName, String lastName}) async {
     final results = await db.query(
       Tables.authorTableName,

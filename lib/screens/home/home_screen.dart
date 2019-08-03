@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_quotes/commons/resources/my_quotes_icons.dart';
-import 'package:my_quotes/screens/add_author/add_author_screen.dart';
+import 'package:my_quotes/screens/add_quote/add_quote_screen.dart';
 import 'package:my_quotes/tabs/quotes/quotes_tab.dart';
 
 import 'package:my_quotes/tabs/authors/authors_tab.dart';
@@ -65,9 +65,11 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   void _onFABClicked() async {
-    final author = await Navigator.push(
+    final quote = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => AddAuthorScreen()),
+      MaterialPageRoute(builder: (context) => AddQuoteScreen()),
     );
+    // TODO refresh quotes
+    print("DEBUG: Quote added: $quote");
   }
 }
