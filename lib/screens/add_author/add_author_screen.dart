@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_quotes/commons/resources/dimens.dart';
+import 'package:my_quotes/commons/widgets/toast.dart';
 import 'package:my_quotes/injection/service_location.dart';
 
 import 'add_author_bloc.dart';
@@ -112,15 +113,31 @@ class _AddAuthorScreenState extends State<AddAuthorScreen> {
     );
 
     if (either.isRight()) {
+      _showSuccessToast('Author created');
       Navigator.pop(context, either.right);
     } else {
       setState(() {
         _isAddingAuthor = false;
       });
-      _scaffoldKey.currentState.removeCurrentSnackBar();
-      _scaffoldKey.currentState.showSnackBar(
-        SnackBar(content: Text(either.left)),
-      );
+      _showFailureToast(either.left);
     }
+  }
+
+  void _showSuccessToast(String message) {
+    Toast.show(
+      Icon(Icons.done, color: Colors.white),
+      message,
+      context,
+      backgroundColor: Colors.green,
+    );
+  }
+
+  void _showFailureToast(String message) {
+    Toast.show(
+      Icon(Icons.close, color: Colors.white),
+      message,
+      context,
+      backgroundColor: Colors.red,
+    );
   }
 }
