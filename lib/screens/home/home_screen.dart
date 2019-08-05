@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:my_quotes/commons/resources/my_quotes_icons.dart';
+import 'package:my_quotes/injection/service_location.dart';
 import 'package:my_quotes/screens/add_quote/add_quote_screen.dart';
 import 'package:my_quotes/tabs/quotes/quotes_tab.dart';
 
 import 'package:my_quotes/tabs/authors/authors_tab.dart';
+import 'package:my_quotes/tabs/quotes/quotes_tab_bloc.dart';
+import 'package:my_quotes/tabs/quotes/quotes_tab_bloc_provider.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -15,11 +19,25 @@ class _HomeScreenState extends State<HomeScreen>
   int index = 0;
   TabController _tabController;
 
+  QuotesTabBloc _quotesTabBloc;
+
   @override
   void initState() {
     super.initState();
+
+    final _quotesTabBlocProvider = sl.get<QuotesTabBlocProvider>();
+    _quotesTabBloc = _quotesTabBlocProvider.get();
+    _quotesTabBloc.loadQuotes();
+
     _tabController = TabController(vsync: this, length: 2);
     _tabController.animation.addListener(_onTabChanged);
+  }
+
+  @override
+  void dispose() {
+    _quotesTabBloc.dispose();
+    _tabController.dispose();
+    super.dispose();
   }
 
   @override
@@ -38,7 +56,10 @@ class _HomeScreenState extends State<HomeScreen>
       body: TabBarView(
         controller: _tabController,
         children: [
-          QuotesTab(),
+          Provider<QuotesTabBloc>.value(
+            value: _quotesTabBloc,
+            child: QuotesTab(),
+          ),
           AuthorsTab(),
         ],
       ),
@@ -69,7 +90,8 @@ class _HomeScreenState extends State<HomeScreen>
       context,
       MaterialPageRoute(builder: (context) => AddQuoteScreen()),
     );
-    // TODO refresh quotes
-    print("DEBUG: Quote added: $quote");
+    if (quote != null) {
+      _quotesTabBloc.loadQuotes();
+    }
   }
 }

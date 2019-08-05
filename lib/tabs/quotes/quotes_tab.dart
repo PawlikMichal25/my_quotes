@@ -1,45 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:my_quotes/commons/resources/dimens.dart';
 import 'package:my_quotes/commons/utils/presentation_formatter.dart';
-import 'package:my_quotes/injection/service_location.dart';
-import 'package:my_quotes/model/author.dart';
 import 'package:my_quotes/model/quote.dart';
 import 'package:my_quotes/commons/architecture/resource.dart';
+import 'package:provider/provider.dart';
 
 import 'quotes_tab_bloc.dart';
-import 'quotes_tab_bloc_provider.dart';
 
 class QuotesTab extends StatefulWidget {
-  final Author author;
-
-  QuotesTab({this.author});
 
   @override
   _QuotesTabState createState() => _QuotesTabState();
 }
 
 class _QuotesTabState extends State<QuotesTab> {
-  QuotesTabBloc _quotesTabBloc;
-
-  @override
-  void initState() {
-    super.initState();
-    final blocProvider = sl.get<QuotesTabBlocProvider>();
-    _quotesTabBloc = blocProvider.get(authorId: widget.author?.id);
-    _quotesTabBloc.loadQuotes();
-  }
-
-  @override
-  void dispose() {
-    _quotesTabBloc.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
+    final bloc = Provider.of<QuotesTabBloc>(context);
     return StreamBuilder<Resource<List<Quote>>>(
         initialData: Resource.loading(),
-        stream: _quotesTabBloc.quotesStream,
+        stream: bloc.quotesStream,
         builder: (_, AsyncSnapshot<Resource<List<Quote>>> snapshot) {
           final resource = snapshot.data;
 
