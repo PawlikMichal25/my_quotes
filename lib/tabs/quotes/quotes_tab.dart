@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:my_quotes/commons/resources/dimens.dart';
 import 'package:my_quotes/commons/utils/presentation_formatter.dart';
+import 'package:my_quotes/commons/widgets/share_or_copy_quote_dialog.dart';
+import 'package:my_quotes/commons/widgets/toast.dart';
 import 'package:my_quotes/model/quote.dart';
 import 'package:my_quotes/commons/architecture/resource.dart';
 import 'package:provider/provider.dart';
+import 'package:share/share.dart';
 
 import 'quotes_tab_bloc.dart';
 
 class QuotesTab extends StatefulWidget {
-
   @override
   _QuotesTabState createState() => _QuotesTabState();
 }
 
 class _QuotesTabState extends State<QuotesTab> {
-
   @override
   Widget build(BuildContext context) {
     final bloc = Provider.of<QuotesTabBloc>(context);
@@ -57,29 +59,61 @@ class _QuotesTabState extends State<QuotesTab> {
     return Card(
       elevation: Dimens.oneThirdDefaultSpacing,
       margin: const EdgeInsets.all(Dimens.halfDefaultSpacing),
-      child: Padding(
-        padding: const EdgeInsets.all(Dimens.defaultSpacing),
-        child: Column(
-          children: [
-            Text(
-              "${quote.content}",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 16.0,
-                fontStyle: FontStyle.italic,
-              ),
-            ),
-            SizedBox(height: Dimens.halfDefaultSpacing),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+      child: Material(
+        child: InkWell(
+          onLongPress: () {
+            _onCardLongPressed(quote);
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(Dimens.defaultSpacing),
+            child: Column(
               children: [
-                Text(PresentationFormatter.formatAuthor(quote.author)),
+                Text(
+                  "${quote.content}",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16.0,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+                SizedBox(height: Dimens.halfDefaultSpacing),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(PresentationFormatter.formatAuthor(quote.author)),
+                  ],
+                ),
               ],
             ),
-          ],
+          ),
         ),
       ),
     );
+  }
+
+  void _onCardLongPressed(Quote quote) async {
+    final formattedQuote = PresentationFormatter.formatQuoteForSharing(quote);
+    final result = await showDialog(
+      context: context,
+      builder: (context) {
+        return ShareOrCopyQuoteDialog(quote: quote);
+      },
+    );
+
+    switch (result) {
+      case ShareOrCopyQuoteDialogResult.share:
+        Share.share(formattedQuote);
+        break;
+      case ShareOrCopyQuoteDialogResult.copy:
+        Clipboard.setData(ClipboardData(text: formattedQuote));
+        Toast.show(
+          message: "Quote copied to clipboard",
+          context: context,
+          icon: Icon(Icons.done, color: Colors.white),
+          backgroundColor: Colors.green,
+        );
+        break;
+    }
   }
 }
