@@ -9,8 +9,9 @@ import 'edit_author_bloc.dart';
 
 class EditAuthorScreen extends StatefulWidget {
   final Author author;
+  final bool deletingEnabled;
 
-  EditAuthorScreen({this.author});
+  EditAuthorScreen({@required this.author, @required this.deletingEnabled});
 
   @override
   _EditAuthorScreenState createState() => _EditAuthorScreenState();
@@ -52,14 +53,7 @@ class _EditAuthorScreenState extends State<EditAuthorScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Edit author'),
-        actions: [
-          _isProcessing
-              ? CircularProgressIndicator()
-              : IconButton(
-                  icon: Icon(Icons.delete),
-                  onPressed: _deleteAuthor,
-                )
-        ],
+        actions: _buildActions(),
       ),
       body: Column(
         children: [
@@ -105,6 +99,28 @@ class _EditAuthorScreenState extends State<EditAuthorScreen> {
         _firstNameValid = true;
       });
     }
+  }
+
+  List<Widget> _buildActions() {
+    final delete = _buildDeleteAction();
+    if (delete == null)
+      return [];
+    else
+      return [delete];
+  }
+
+  Widget _buildDeleteAction() {
+    if (widget.deletingEnabled) {
+      if (_isProcessing)
+        return CircularProgressIndicator();
+      else
+        return IconButton(
+          icon: Icon(Icons.delete),
+          onPressed: _deleteAuthor,
+        );
+    }
+
+    return null;
   }
 
   void _onSaveButtonClicked() {

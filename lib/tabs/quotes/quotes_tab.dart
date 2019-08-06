@@ -6,6 +6,7 @@ import 'package:my_quotes/commons/widgets/share_or_copy_quote_dialog.dart';
 import 'package:my_quotes/commons/widgets/toast.dart';
 import 'package:my_quotes/model/quote.dart';
 import 'package:my_quotes/commons/architecture/resource.dart';
+import 'package:my_quotes/screens/edit_quote/edit_quote_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 
@@ -65,6 +66,9 @@ class _QuotesTabState extends State<QuotesTab> {
       margin: const EdgeInsets.all(Dimens.halfDefaultSpacing),
       child: Material(
         child: InkWell(
+          onTap: () {
+            _onCardClicked(quote);
+          },
           onLongPress: () {
             _onCardLongPressed(quote);
           },
@@ -94,6 +98,15 @@ class _QuotesTabState extends State<QuotesTab> {
         ),
       ),
     );
+  }
+
+  void _onCardClicked(Quote quote) async {
+    await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => EditQuoteScreen(quote: quote),
+        ));
+    widget.onDataChanged();
   }
 
   void _onCardLongPressed(Quote quote) async {

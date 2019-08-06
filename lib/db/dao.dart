@@ -41,7 +41,7 @@ class Dao {
     if (authorId == null) {
       return getAllQuotes();
     } else {
-      return getQuotesWithAuthorId(authorId);
+      return getQuotesWithAuthorId(authorId: authorId);
     }
   }
 
@@ -75,7 +75,7 @@ class Dao {
     ).toList();
   }
 
-  Future<List<Quote>> getQuotesWithAuthorId(int authorId) async {
+  Future<List<Quote>> getQuotesWithAuthorId({int authorId}) async {
     final query = '''
     SELECT ${Tables.quoteColumnId}, ${Tables.quoteColumnContent}, 
     ${Tables.authorTableName}.${Tables.authorColumnID}, ${Tables.authorColumnFirstName}, ${Tables.authorColumnLastName}
@@ -174,12 +174,40 @@ class Dao {
     }
   }
 
+  Future<Quote> editQuote({
+    Quote quote,
+    String newContent,
+  }) async {
+    final Map<String, dynamic> values = {
+      Tables.quoteColumnContent: newContent,
+    };
+    final result = await db.update(
+      Tables.quoteTableName,
+      values,
+      where: "${Tables.quoteColumnId} = ?",
+      whereArgs: [quote.id],
+    );
+    if (result == 1) {
+      return Quote(id: quote.id, author: quote.author, content: newContent);
+    } else {
+      return null;
+    }
+  }
+
   Future<void> deleteAuthor({int authorId}) async {
     await deleteQuotesWithAuthor(authorId: authorId);
     await db.delete(
       Tables.authorTableName,
       where: "${Tables.authorColumnID} = ?",
       whereArgs: [authorId],
+    );
+  }
+
+  Future<void> deleteQuote({int quoteId}) async {
+    await db.delete(
+      Tables.quoteTableName,
+      where: "${Tables.quoteColumnId} = ?",
+      whereArgs: [quoteId],
     );
   }
 

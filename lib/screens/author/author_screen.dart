@@ -30,6 +30,11 @@ class _AuthorScreenState extends State<AuthorScreen> {
     final _quotesTabBlocProvider = sl.get<QuotesTabBlocProvider>();
     _quotesTabBloc = _quotesTabBlocProvider.get(authorId: widget.author.id);
     _quotesTabBloc.loadQuotes();
+    _quotesTabBloc.quotesStream.listen((resource) {
+      if (resource.isSuccessful && resource.data.length == 0) {
+        Navigator.pop(context);
+      }
+    });
   }
 
   @override
@@ -60,7 +65,9 @@ class _AuthorScreenState extends State<AuthorScreen> {
       body: Provider<QuotesTabBloc>.value(
         value: _quotesTabBloc,
         child: QuotesTab(
-          onDataChanged: () {},
+          onDataChanged: () {
+            _quotesTabBloc.loadQuotes();
+          },
         ),
       ),
     );
@@ -78,7 +85,8 @@ class _AuthorScreenState extends State<AuthorScreen> {
     final result = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => EditAuthorScreen(author: widget.author),
+        builder: (context) =>
+            EditAuthorScreen(author: widget.author, deletingEnabled: true),
       ),
     );
 
