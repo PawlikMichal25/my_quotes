@@ -145,7 +145,6 @@
 				118330757B3424D74CA596A3 /* Pods-Runner.release.xcconfig */,
 				9FAC49749D760FBAB11E3865 /* Pods-Runner.profile.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -390,7 +389,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = myquotes.blacklagoonapps.io.myQuotes;
+				PRODUCT_BUNDLE_IDENTIFIER = io.blacklagoonapps.quotes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -519,7 +518,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = myquotes.blacklagoonapps.io.myQuotes;
+				PRODUCT_BUNDLE_IDENTIFIER = io.blacklagoonapps.quotes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -542,7 +541,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = myquotes.blacklagoonapps.io.myQuotes;
+				PRODUCT_BUNDLE_IDENTIFIER = io.blacklagoonapps.quotes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VERSIONING_SYSTEM = "apple-generic";
 			};

@@ -1,4 +1,4 @@
-package myquotes.blacklagoonapps.io.my_quotes;
+package io.blacklagoonapps.quotes;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
