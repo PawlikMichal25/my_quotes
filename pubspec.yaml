@@ -11,7 +11,7 @@ description: Mobile app for storing personal quotes
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+1
+version: 1.0.0
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -22,7 +22,7 @@ dependencies:
 
   provider: 3.0.0+1
   get_it: 1.0.3+2
-  rxdart: 0.22.1
+  rxdart: ^0.22.1+1
   sqflite: ^1.1.6+3
   path_provider: ^1.2.0
   share: 0.6.2+1
