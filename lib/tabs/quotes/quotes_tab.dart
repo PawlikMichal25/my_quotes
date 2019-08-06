@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:my_quotes/commons/resources/dimens.dart';
+import 'package:my_quotes/commons/resources/my_quotes_icons.dart';
+import 'package:my_quotes/commons/resources/styles.dart';
 import 'package:my_quotes/commons/utils/presentation_formatter.dart';
 import 'package:my_quotes/commons/widgets/share_or_copy_quote_dialog.dart';
 import 'package:my_quotes/commons/widgets/toast.dart';
@@ -35,7 +37,7 @@ class _QuotesTabState extends State<QuotesTab> {
             case Status.LOADING:
               return _buildProgressIndicator();
             case Status.SUCCESS:
-              return _buildQuotesList(resource.data);
+              return _buildSuccessBody(resource.data);
             case Status.ERROR:
               return Text(resource.message);
           }
@@ -46,6 +48,34 @@ class _QuotesTabState extends State<QuotesTab> {
   Widget _buildProgressIndicator() {
     return Center(
       child: CircularProgressIndicator(),
+    );
+  }
+
+  Widget _buildSuccessBody(List<Quote> quotes) {
+    if (quotes.length == 0)
+      return _buildEmptyView();
+    else
+      return _buildQuotesList(quotes);
+  }
+
+  Widget _buildEmptyView() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          MyQuotesIcons.quotes,
+          size: 120.0,
+          color: Styles.lightGrey,
+        ),
+        SizedBox(height: Dimens.halfDefaultSpacing),
+        Text(
+          'No quotes',
+          style: TextStyle(
+            color: Styles.lightGrey,
+            fontSize: 16.0,
+          ),
+        ),
+      ],
     );
   }
 

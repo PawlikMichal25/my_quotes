@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:my_quotes/commons/resources/dimens.dart';
+import 'package:my_quotes/commons/resources/my_quotes_icons.dart';
 import 'package:my_quotes/commons/resources/styles.dart';
 import 'package:my_quotes/commons/utils/presentation_formatter.dart';
 import 'package:my_quotes/model/author.dart';
@@ -33,7 +34,7 @@ class _AuthorsTabState extends State<AuthorsTab> {
             case Status.LOADING:
               return _buildProgressIndicator();
             case Status.SUCCESS:
-              return _buildAuthorsList(resource.data);
+              return _buildSuccessBody(resource.data);
             case Status.ERROR:
               return Text(resource.message);
           }
@@ -44,6 +45,34 @@ class _AuthorsTabState extends State<AuthorsTab> {
   Widget _buildProgressIndicator() {
     return Center(
       child: CircularProgressIndicator(),
+    );
+  }
+
+  Widget _buildSuccessBody(List<Author> authors) {
+    if (authors.length == 0)
+      return _buildEmptyView();
+    else
+      return _buildAuthorsList(authors);
+  }
+
+  Widget _buildEmptyView() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          MyQuotesIcons.authors,
+          size: 120.0,
+          color: Styles.lightGrey,
+        ),
+        SizedBox(height: Dimens.halfDefaultSpacing),
+        Text(
+          'No authors',
+          style: TextStyle(
+            color: Styles.lightGrey,
+            fontSize: 16.0,
+          ),
+        ),
+      ],
     );
   }
 

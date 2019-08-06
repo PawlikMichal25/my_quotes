@@ -37,6 +37,8 @@ class Styles {
 
   static Color get darkGrey => Colors.grey[700];
 
+  static Color get lightGrey => Color(0xFF9A9A9A);
+
   static Color get errorRed => Colors.red[700];
 
   static Color get linkColor => Color(0xFF0645AD);
