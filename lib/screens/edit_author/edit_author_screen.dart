@@ -108,7 +108,7 @@ class _EditAuthorScreenState extends State<EditAuthorScreen> {
   }
 
   void _onSaveButtonClicked() {
-    final text = _firstNameController.text;
+    final text = _firstNameController.text.trim();
     if (text.isEmpty) {
       setState(() {
         _firstNameValid = false;

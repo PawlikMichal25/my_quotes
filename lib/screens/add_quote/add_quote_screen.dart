@@ -188,7 +188,7 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
   }
 
   void _onSaveButtonClicked() {
-    final text = _quoteController.text;
+    final text = _quoteController.text.trim();
 
     if (_author == null) {
       setState(() {
