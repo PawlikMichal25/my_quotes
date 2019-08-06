@@ -141,7 +141,7 @@ class _QuotesTabState extends State<QuotesTab> {
 
   void _onCardLongPressed(Quote quote) async {
     final formattedQuote = PresentationFormatter.formatQuoteForSharing(quote);
-    final result = await showDialog(
+    final ShareOrCopyQuoteDialogResult result = await showDialog(
       context: context,
       builder: (context) {
         return ShareOrCopyQuoteDialog(quote: quote);

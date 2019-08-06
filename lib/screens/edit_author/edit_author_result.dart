@@ -11,7 +11,7 @@ class EditAuthorResult {
 class AuthorChanged extends EditAuthorResult {
   final Author author;
 
-  AuthorChanged( this.author) : super._();
+  AuthorChanged(this.author) : super._();
 }
 
 class AuthorDeleted extends EditAuthorResult {

@@ -59,15 +59,15 @@ class Dao {
     return results.map(
       (row) {
         final author = Author(
-          id: row[Tables.authorColumnID],
-          firstName: row[Tables.authorColumnFirstName],
-          lastName: row[Tables.authorColumnLastName],
+          id: row[Tables.authorColumnID] as int,
+          firstName: row[Tables.authorColumnFirstName] as String,
+          lastName: row[Tables.authorColumnLastName] as String,
         );
 
         final quote = Quote(
-          id: row[Tables.quoteColumnId],
+          id: row[Tables.quoteColumnId] as int,
           author: author,
-          content: row[Tables.quoteColumnContent],
+          content: row[Tables.quoteColumnContent] as String,
         );
 
         return quote;
@@ -90,15 +90,15 @@ class Dao {
     return results.map(
       (row) {
         final author = Author(
-          id: row[Tables.authorColumnID],
-          firstName: row[Tables.authorColumnFirstName],
-          lastName: row[Tables.authorColumnLastName],
+          id: row[Tables.authorColumnID] as int,
+          firstName: row[Tables.authorColumnFirstName] as String,
+          lastName: row[Tables.authorColumnLastName] as String,
         );
 
         final quote = Quote(
-          id: row[Tables.quoteColumnId],
+          id: row[Tables.quoteColumnId] as int,
           author: author,
-          content: row[Tables.quoteColumnContent],
+          content: row[Tables.quoteColumnContent] as String,
         );
 
         return quote;
@@ -111,9 +111,9 @@ class Dao {
     return results
         .map(
           (row) => Author(
-            id: row[Tables.authorColumnID],
-            firstName: row[Tables.authorColumnFirstName],
-            lastName: row[Tables.authorColumnLastName],
+            id: row[Tables.authorColumnID] as int,
+            firstName: row[Tables.authorColumnFirstName] as String,
+            lastName: row[Tables.authorColumnLastName] as String,
           ),
         )
         .toList();
@@ -128,9 +128,9 @@ class Dao {
     return results
         .map(
           (row) => Author(
-            id: row[Tables.authorColumnID],
-            firstName: row[Tables.authorColumnFirstName],
-            lastName: row[Tables.authorColumnLastName],
+            id: row[Tables.authorColumnID] as int,
+            firstName: row[Tables.authorColumnFirstName] as String,
+            lastName: row[Tables.authorColumnLastName] as String,
           ),
         )
         .toList();
@@ -146,7 +146,7 @@ class Dao {
     );
 
     if (results.length == 1) {
-      return results[0][Tables.authorColumnID];
+      return results[0][Tables.authorColumnID] as int;
     } else {
       return -1;
     }

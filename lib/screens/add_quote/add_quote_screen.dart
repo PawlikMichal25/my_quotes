@@ -148,7 +148,7 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
   }
 
   void _onAddNewAuthorClick() async {
-    final author = await Navigator.push(
+    final Author author = await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => AddAuthorScreen()),
     );

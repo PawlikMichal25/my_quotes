@@ -18,10 +18,10 @@ class Either<L, R> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is Either &&
-              runtimeType == other.runtimeType &&
-              _left == other._left &&
-              _right == other._right;
+      other is Either &&
+          runtimeType == other.runtimeType &&
+          _left == other._left &&
+          _right == other._right;
 
   @override
   int get hashCode => _left.hashCode ^ _right.hashCode;
