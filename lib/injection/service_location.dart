@@ -3,6 +3,7 @@ import 'package:my_quotes/db/dao.dart';
 import 'package:my_quotes/db/app_database.dart';
 import 'package:my_quotes/screens/add_author/add_author_bloc.dart';
 import 'package:my_quotes/screens/add_quote/add_quote_bloc.dart';
+import 'package:my_quotes/screens/edit_author/edit_author_bloc.dart';
 import 'package:my_quotes/tabs/authors/authors_tab_bloc.dart';
 import 'package:my_quotes/tabs/quotes/quotes_tab_bloc_provider.dart';
 
@@ -37,5 +38,9 @@ void _setupBlocs() {
 
   sl.registerFactory<AddAuthorBloc>(() {
     return AddAuthorBloc(dao: sl.get<Dao>());
+  });
+
+  sl.registerFactory<EditAuthorBloc>(() {
+    return EditAuthorBloc(dao: sl.get<Dao>());
   });
 }

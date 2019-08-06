@@ -151,4 +151,43 @@ class Dao {
       return -1;
     }
   }
+
+  Future<Author> editAuthor({
+    int authorId,
+    String firstName,
+    String lastName,
+  }) async {
+    final Map<String, dynamic> values = {
+      Tables.authorColumnFirstName: firstName,
+      Tables.authorColumnLastName: lastName,
+    };
+    final result = await db.update(
+      Tables.authorTableName,
+      values,
+      where: "${Tables.authorColumnID} = ?",
+      whereArgs: [authorId],
+    );
+    if (result == 1) {
+      return Author(id: authorId, firstName: firstName, lastName: lastName);
+    } else {
+      return null;
+    }
+  }
+
+  Future<void> deleteAuthor({int authorId}) async {
+    await deleteQuotesWithAuthor(authorId: authorId);
+    await db.delete(
+      Tables.authorTableName,
+      where: "${Tables.authorColumnID} = ?",
+      whereArgs: [authorId],
+    );
+  }
+
+  Future<void> deleteQuotesWithAuthor({int authorId}) async {
+    await db.delete(
+      Tables.quoteTableName,
+      where: "${Tables.quoteColumnAuthorId} = ?",
+      whereArgs: [authorId],
+    );
+  }
 }

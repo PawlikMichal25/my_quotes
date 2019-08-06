@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_quotes/injection/service_location.dart';
 import 'package:my_quotes/model/author.dart';
+import 'package:my_quotes/screens/edit_author/edit_author_result.dart';
+import 'package:my_quotes/screens/edit_author/edit_author_screen.dart';
 import 'package:my_quotes/tabs/quotes/quotes_tab.dart';
 import 'package:my_quotes/tabs/quotes/quotes_tab_bloc.dart';
 import 'package:my_quotes/tabs/quotes/quotes_tab_bloc_provider.dart';
@@ -16,11 +18,14 @@ class AuthorScreen extends StatefulWidget {
 }
 
 class _AuthorScreenState extends State<AuthorScreen> {
+  Author author;
   QuotesTabBloc _quotesTabBloc;
 
   @override
   void initState() {
     super.initState();
+
+    author = widget.author;
 
     final _quotesTabBlocProvider = sl.get<QuotesTabBlocProvider>();
     _quotesTabBloc = _quotesTabBlocProvider.get(authorId: widget.author.id);
@@ -37,12 +42,56 @@ class _AuthorScreenState extends State<AuthorScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("${widget.author.firstName} ${widget.author.lastName}"),
+        title: Text("${author.firstName} ${author.lastName}"),
+        actions: [
+          PopupMenuButton<_Action>(
+            onSelected: _onActionSelected,
+            itemBuilder: (BuildContext context) {
+              return [
+                PopupMenuItem<_Action>(
+                  value: _Action.edit,
+                  child: Text('Edit'),
+                )
+              ];
+            },
+          ),
+        ],
       ),
       body: Provider<QuotesTabBloc>.value(
         value: _quotesTabBloc,
-        child: QuotesTab(),
+        child: QuotesTab(
+          onDataChanged: () {},
+        ),
       ),
     );
   }
+
+  _onActionSelected(_Action action) async {
+    switch (action) {
+      case _Action.edit:
+        _editAuthor();
+        break;
+    }
+  }
+
+  _editAuthor() async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EditAuthorScreen(author: widget.author),
+      ),
+    );
+
+    if (result is AuthorChanged) {
+      final newAuthor = result.author;
+      setState(() {
+        author = newAuthor;
+      });
+      _quotesTabBloc.loadQuotes();
+    } else if (result is AuthorDeleted) {
+      Navigator.pop(context);
+    }
+  }
 }
+
+enum _Action { edit }

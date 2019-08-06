@@ -12,6 +12,10 @@ import 'package:share/share.dart';
 import 'quotes_tab_bloc.dart';
 
 class QuotesTab extends StatefulWidget {
+  final Function onDataChanged;
+
+  QuotesTab({@required this.onDataChanged});
+
   @override
   _QuotesTabState createState() => _QuotesTabState();
 }

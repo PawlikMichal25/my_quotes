@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_quotes/commons/resources/my_quotes_icons.dart';
 import 'package:my_quotes/injection/service_location.dart';
 import 'package:my_quotes/screens/add_quote/add_quote_screen.dart';
+import 'package:my_quotes/tabs/authors/authors_tab_bloc.dart';
 import 'package:my_quotes/tabs/quotes/quotes_tab.dart';
 
 import 'package:my_quotes/tabs/authors/authors_tab.dart';
@@ -20,6 +21,7 @@ class _HomeScreenState extends State<HomeScreen>
   TabController _tabController;
 
   QuotesTabBloc _quotesTabBloc;
+  AuthorsTabBloc _authorsTabBloc;
 
   @override
   void initState() {
@@ -27,7 +29,9 @@ class _HomeScreenState extends State<HomeScreen>
 
     final _quotesTabBlocProvider = sl.get<QuotesTabBlocProvider>();
     _quotesTabBloc = _quotesTabBlocProvider.get();
-    _quotesTabBloc.loadQuotes();
+    _authorsTabBloc = sl.get<AuthorsTabBloc>();
+
+    _refreshTabs();
 
     _tabController = TabController(vsync: this, length: 2);
     _tabController.animation.addListener(_onTabChanged);
@@ -36,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   void dispose() {
     _quotesTabBloc.dispose();
+    _authorsTabBloc.dispose();
     _tabController.dispose();
     super.dispose();
   }
@@ -58,9 +63,16 @@ class _HomeScreenState extends State<HomeScreen>
         children: [
           Provider<QuotesTabBloc>.value(
             value: _quotesTabBloc,
-            child: QuotesTab(),
+            child: QuotesTab(
+              onDataChanged: _refreshTabs,
+            ),
           ),
-          AuthorsTab(),
+          Provider<AuthorsTabBloc>.value(
+            value: _authorsTabBloc,
+            child: AuthorsTab(
+              onDataChanged: _refreshTabs,
+            ),
+          ),
         ],
       ),
       floatingActionButton: index == 0
@@ -91,7 +103,12 @@ class _HomeScreenState extends State<HomeScreen>
       MaterialPageRoute(builder: (context) => AddQuoteScreen()),
     );
     if (quote != null) {
-      _quotesTabBloc.loadQuotes();
+      _refreshTabs();
     }
+  }
+
+  void _refreshTabs() {
+    _quotesTabBloc.loadQuotes();
+    _authorsTabBloc.loadAuthors();
   }
 }
