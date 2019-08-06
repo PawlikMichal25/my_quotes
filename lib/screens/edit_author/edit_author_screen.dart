@@ -99,7 +99,7 @@ class _EditAuthorScreenState extends State<EditAuthorScreen> {
   }
 
   void _onFirstNameFormChanged() {
-    final text = _firstNameController.text;
+    final text = _firstNameController.text.trim();
     if (text.isNotEmpty) {
       setState(() {
         _firstNameValid = true;
@@ -108,8 +108,9 @@ class _EditAuthorScreenState extends State<EditAuthorScreen> {
   }
 
   void _onSaveButtonClicked() {
-    final text = _firstNameController.text.trim();
-    if (text.isEmpty) {
+    final firstName = _firstNameController.text.trim();
+    final lastName = _lastNameController.text.trim();
+    if (firstName.isEmpty) {
       setState(() {
         _firstNameValid = false;
       });
@@ -118,14 +119,11 @@ class _EditAuthorScreenState extends State<EditAuthorScreen> {
         _firstNameValid = true;
         _isProcessing = true;
       });
-      _editAuthor();
+      _editAuthor(firstName, lastName);
     }
   }
 
-  void _editAuthor() async {
-    final firstName = _firstNameController.text;
-    final lastName = _lastNameController.text;
-
+  void _editAuthor(String firstName, String lastName) async {
     if (_didAuthorChange(firstName, lastName)) {
       Navigator.pop(context);
     } else {

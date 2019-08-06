@@ -81,7 +81,7 @@ class _AddAuthorScreenState extends State<AddAuthorScreen> {
   }
 
   void _onFirstNameFormChanged() {
-    final text = _firstNameController.text;
+    final text = _firstNameController.text.trim();
     if (text.isNotEmpty) {
       setState(() {
         _firstNameValid = true;
@@ -90,8 +90,9 @@ class _AddAuthorScreenState extends State<AddAuthorScreen> {
   }
 
   void _onSaveButtonClicked() {
-    final text = _firstNameController.text.trim();
-    if (text.isEmpty) {
+    final firstName = _firstNameController.text.trim();
+    final lastName = _lastNameController.text.trim();
+    if (firstName.isEmpty) {
       setState(() {
         _firstNameValid = false;
       });
@@ -100,14 +101,14 @@ class _AddAuthorScreenState extends State<AddAuthorScreen> {
         _firstNameValid = true;
         _isAddingAuthor = true;
       });
-      _addAuthor();
+      _addAuthor(firstName, lastName);
     }
   }
 
-  void _addAuthor() async {
+  void _addAuthor(String firstName, String lastName) async {
     final either = await _addAuthorBloc.addAuthor(
-      firstName: _firstNameController.text,
-      lastName: _lastNameController.text,
+      firstName: firstName,
+      lastName: lastName,
     );
 
     if (either.isRight()) {
