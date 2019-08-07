@@ -74,6 +74,9 @@ class _AddAuthorScreenState extends State<AddAuthorScreen> {
                       horizontal: Dimens.buttonActionPadding),
                   child: Text('Save'),
                   onPressed: () => _onSaveButtonClicked(),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(Dimens.buttonRadius),
+                  ),
                 ),
         ],
       ),

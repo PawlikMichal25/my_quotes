@@ -143,6 +143,9 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
       child: RaisedButton(
         child: Text('Add new'),
         onPressed: _onAddNewAuthorClick,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(Dimens.buttonRadius),
+        ),
       ),
     );
   }
@@ -184,6 +187,9 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
                 horizontal: Dimens.buttonActionPadding),
             child: Text('Save'),
             onPressed: () => _onSaveButtonClicked(),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(Dimens.buttonRadius),
+            ),
           );
   }
 

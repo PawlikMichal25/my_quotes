@@ -7,4 +7,5 @@ class Dimens {
   static const doubleDefaultSpacing = 24.0;
   static const tripleDefaultSpacing = 36.0;
   static const buttonActionPadding = 66.0;
+  static const buttonRadius = 30.0;
 }

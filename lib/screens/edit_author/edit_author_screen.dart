@@ -82,10 +82,13 @@ class _EditAuthorScreenState extends State<EditAuthorScreen> {
           _isProcessing
               ? CircularProgressIndicator()
               : RaisedButton(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: Dimens.buttonActionPadding),
                   child: Text('Save'),
                   onPressed: () => _onSaveButtonClicked(),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: Dimens.buttonActionPadding),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(Dimens.buttonRadius),
+                  ),
                 ),
         ],
       ),

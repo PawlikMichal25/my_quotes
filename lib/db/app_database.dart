@@ -79,5 +79,27 @@ class AppDatabase {
 
     await dao.addAuthor(author3);
     await dao.addQuote(quote4);
+
+    final author4 = Author(id: 4, firstName: "Alan", lastName: "Watts");
+    final quote5 = Quote(
+      id: 5,
+      author: author4,
+      content:
+          "The only way to make sense out of change is to plunge into it, move with it, and join the dance.",
+    );
+
+    await dao.addAuthor(author4);
+    await dao.addQuote(quote5);
+
+    final author5 = Author(id: 5, firstName: "Mark", lastName: "Twain");
+    final quote6 = Quote(
+      id: 6,
+      author: author5,
+      content:
+          "The man who does not read has no advantage over the man who cannot read.",
+    );
+
+    await dao.addAuthor(author5);
+    await dao.addQuote(quote6);
   }
 }

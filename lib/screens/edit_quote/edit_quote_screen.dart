@@ -116,8 +116,11 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
     return Padding(
       padding: const EdgeInsets.all(Dimens.defaultSpacing),
       child: RaisedButton(
-        child: Text('Edit author'),
+        child: Text("Edit author"),
         onPressed: _onEditAuthorClick,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(Dimens.buttonRadius),
+        ),
       ),
     );
   }
@@ -160,8 +163,11 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
         : RaisedButton(
             padding: const EdgeInsets.symmetric(
                 horizontal: Dimens.buttonActionPadding),
-            child: Text('Save'),
-            onPressed: () => _onSaveButtonClicked(),
+            child: Text("Save"),
+            onPressed: _onSaveButtonClicked,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(Dimens.buttonRadius),
+            ),
           );
   }
 
