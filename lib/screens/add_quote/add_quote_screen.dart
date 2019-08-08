@@ -194,7 +194,7 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
   }
 
   void _onSaveButtonClicked() {
-    final text = _quoteController.text.trim();
+    final content = _quoteController.text.trim();
 
     if (_author == null) {
       setState(() {
@@ -202,25 +202,25 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
       });
     }
 
-    if (text.isEmpty) {
+    if (content.isEmpty) {
       setState(() {
         _quoteValid = false;
       });
     }
 
-    if (_author != null && text.isNotEmpty) {
+    if (_author != null && content.isNotEmpty) {
       setState(() {
         _authorValid = true;
         _quoteValid = true;
         _isAddingQuote = true;
       });
-      _addQuote();
+      _addQuote(content);
     }
   }
 
-  void _addQuote() async {
+  void _addQuote(String content) async {
     final quote = await _addQuoteBloc.addQuote(
-      content: _quoteController.text,
+      content: content,
       author: _author,
     );
 
