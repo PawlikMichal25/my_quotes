@@ -171,6 +171,7 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
         maxLines: 8,
         minLines: 1,
         controller: _quoteController,
+        textCapitalization: TextCapitalization.sentences,
         decoration: InputDecoration(
           labelText: 'Quote',
           errorText: _quoteValid ? null : 'Quote can\'t be empty',

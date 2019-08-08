@@ -61,6 +61,7 @@ class _EditAuthorScreenState extends State<EditAuthorScreen> {
             padding: const EdgeInsets.all(Dimens.defaultSpacing),
             child: TextFormField(
               controller: _firstNameController,
+              textCapitalization: TextCapitalization.words,
               decoration: InputDecoration(
                 errorText:
                     _firstNameValid ? null : 'First name can\'t be empty',
@@ -73,6 +74,7 @@ class _EditAuthorScreenState extends State<EditAuthorScreen> {
                 const EdgeInsets.symmetric(horizontal: Dimens.defaultSpacing),
             child: TextFormField(
               controller: _lastNameController,
+              textCapitalization: TextCapitalization.words,
               decoration: InputDecoration(
                 labelText: 'Last name',
               ),

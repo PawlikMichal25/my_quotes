@@ -49,6 +49,7 @@ class _AddAuthorScreenState extends State<AddAuthorScreen> {
             padding: const EdgeInsets.all(Dimens.defaultSpacing),
             child: TextFormField(
               controller: _firstNameController,
+              textCapitalization: TextCapitalization.words,
               decoration: InputDecoration(
                 errorText:
                     _firstNameValid ? null : 'First name can\'t be empty',
@@ -61,6 +62,7 @@ class _AddAuthorScreenState extends State<AddAuthorScreen> {
                 const EdgeInsets.symmetric(horizontal: Dimens.defaultSpacing),
             child: TextFormField(
               controller: _lastNameController,
+              textCapitalization: TextCapitalization.words,
               decoration: InputDecoration(
                 labelText: 'Last name',
               ),
