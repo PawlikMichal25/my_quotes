@@ -11,16 +11,11 @@ import 'package:my_quotes/screens/author/author_screen.dart';
 import 'package:my_quotes/tabs/authors/authors_tab_bloc.dart';
 import 'package:provider/provider.dart';
 
-class AuthorsTab extends StatefulWidget {
+class AuthorsTab extends StatelessWidget {
   final Function onDataChanged;
 
   AuthorsTab({@required this.onDataChanged});
 
-  @override
-  _AuthorsTabState createState() => _AuthorsTabState();
-}
-
-class _AuthorsTabState extends State<AuthorsTab> {
   @override
   Widget build(BuildContext context) {
     final bloc = Provider.of<AuthorsTabBloc>(context);
@@ -87,13 +82,13 @@ class _AuthorsTabState extends State<AuthorsTab> {
         itemBuilder: (BuildContext context, int index) {
           final author = authors[index];
 
-          return _buildAuthorTile(author);
+          return _buildAuthorTile(context, author);
         },
       ),
     );
   }
 
-  Widget _buildAuthorTile(Author author) {
+  Widget _buildAuthorTile(BuildContext context, Author author) {
     return Material(
       child: InkWell(
         child: Padding(
@@ -106,16 +101,16 @@ class _AuthorsTabState extends State<AuthorsTab> {
             ),
           ),
         ),
-        onTap: () => _openAuthorScreen(author),
+        onTap: () => _openAuthorScreen(context, author),
       ),
     );
   }
 
-  _openAuthorScreen(Author author) async {
+  _openAuthorScreen(BuildContext context, Author author) async {
     await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => AuthorScreen(author: author)),
     );
-    widget.onDataChanged();
+    onDataChanged();
   }
 }

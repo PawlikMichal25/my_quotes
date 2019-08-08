@@ -14,16 +14,11 @@ import 'package:share/share.dart';
 
 import 'quotes_tab_bloc.dart';
 
-class QuotesTab extends StatefulWidget {
+class QuotesTab extends StatelessWidget {
   final Function onDataChanged;
 
   QuotesTab({@required this.onDataChanged});
 
-  @override
-  _QuotesTabState createState() => _QuotesTabState();
-}
-
-class _QuotesTabState extends State<QuotesTab> {
   @override
   Widget build(BuildContext context) {
     final bloc = Provider.of<QuotesTabBloc>(context);
@@ -86,23 +81,23 @@ class _QuotesTabState extends State<QuotesTab> {
         itemBuilder: (BuildContext context, int index) {
           final quote = quotes[index];
 
-          return _buildQuoteTile(quote);
+          return _buildQuoteTile(context, quote);
         },
       ),
     );
   }
 
-  Widget _buildQuoteTile(Quote quote) {
+  Widget _buildQuoteTile(BuildContext context, Quote quote) {
     return Card(
       elevation: Dimens.oneThirdDefaultSpacing,
       margin: const EdgeInsets.all(Dimens.halfDefaultSpacing),
       child: Material(
         child: InkWell(
           onTap: () {
-            _onCardClicked(quote);
+            _onCardClicked(context, quote);
           },
           onLongPress: () {
-            _onCardLongPressed(quote);
+            _onCardLongPressed(context, quote);
           },
           child: Padding(
             padding: const EdgeInsets.all(Dimens.defaultSpacing),
@@ -132,16 +127,16 @@ class _QuotesTabState extends State<QuotesTab> {
     );
   }
 
-  void _onCardClicked(Quote quote) async {
+  void _onCardClicked(BuildContext context, Quote quote) async {
     await Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => EditQuoteScreen(quote: quote),
         ));
-    widget.onDataChanged();
+    onDataChanged();
   }
 
-  void _onCardLongPressed(Quote quote) async {
+  void _onCardLongPressed(BuildContext context, Quote quote) async {
     final formattedQuote = PresentationFormatter.formatQuoteForSharing(quote);
     final ShareOrCopyQuoteDialogResult result = await showDialog(
       context: context,
