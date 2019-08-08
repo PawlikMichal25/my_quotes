@@ -80,13 +80,15 @@ class _QuotesTabState extends State<QuotesTab> {
   }
 
   Widget _buildQuotesList(List<Quote> quotes) {
-    return ListView.builder(
-      itemCount: quotes.length,
-      itemBuilder: (BuildContext context, int index) {
-        final quote = quotes[index];
+    return Scrollbar(
+      child: ListView.builder(
+        itemCount: quotes.length,
+        itemBuilder: (BuildContext context, int index) {
+          final quote = quotes[index];
 
-        return _buildQuoteTile(quote);
-      },
+          return _buildQuoteTile(quote);
+        },
+      ),
     );
   }
 

@@ -77,17 +77,19 @@ class _AuthorsTabState extends State<AuthorsTab> {
   }
 
   Widget _buildAuthorsList(List<Author> authors) {
-    return ListView.separated(
-      itemCount: authors.length,
-      separatorBuilder: (context, index) => Divider(
-        height: 0.0,
-        color: Styles.darkGrey,
-      ),
-      itemBuilder: (BuildContext context, int index) {
-        final author = authors[index];
+    return Scrollbar(
+      child: ListView.separated(
+        itemCount: authors.length,
+        separatorBuilder: (context, index) => Divider(
+          height: 0.0,
+          color: Styles.darkGrey,
+        ),
+        itemBuilder: (BuildContext context, int index) {
+          final author = authors[index];
 
-        return _buildAuthorTile(author);
-      },
+          return _buildAuthorTile(author);
+        },
+      ),
     );
   }
 
