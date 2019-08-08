@@ -6,7 +6,7 @@ import 'package:my_quotes/model/quote.dart';
 class ShareOrCopyQuoteDialog extends StatelessWidget {
   final Quote quote;
 
-  ShareOrCopyQuoteDialog({this.quote});
+  const ShareOrCopyQuoteDialog({this.quote});
 
   @override
   Widget build(BuildContext context) {
