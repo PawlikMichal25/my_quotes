@@ -3,7 +3,10 @@
 
 [![Get it on Google Play][Play Store Badge]][Play Store]
 
-Simple mobile app for storing personal quotes.
+Simple mobile app for storing personal quotes
+
+# Screenshots
+<img src="screenshots/screenshot-1.png" width="240px" />   <img src="screenshots/screenshot-2.png" width="240px" />   <img src="screenshots/screenshot-3.png" width="240px" />
 
 # License
 ```
