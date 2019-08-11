@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_quotes/commons/resources/my_quotes_icons.dart';
 import 'package:my_quotes/injection/service_location.dart';
 import 'package:my_quotes/screens/add_quote/add_quote_screen.dart';
+import 'package:my_quotes/screens/search/search_screen.dart';
 import 'package:my_quotes/tabs/authors/authors_tab_bloc.dart';
 import 'package:my_quotes/tabs/quotes/quotes_tab.dart';
 
@@ -17,7 +18,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
-  int index = 0;
+  int _index = 0;
   TabController _tabController;
 
   QuotesTabBloc _quotesTabBloc;
@@ -27,14 +28,14 @@ class _HomeScreenState extends State<HomeScreen>
   void initState() {
     super.initState();
 
+    _tabController = TabController(vsync: this, length: 2);
+    _tabController.animation.addListener(_onTabChanged);
+
     final _quotesTabBlocProvider = sl.get<QuotesTabBlocProvider>();
     _quotesTabBloc = _quotesTabBlocProvider.get();
     _authorsTabBloc = sl.get<AuthorsTabBloc>();
 
     _refreshTabs();
-
-    _tabController = TabController(vsync: this, length: 2);
-    _tabController.animation.addListener(_onTabChanged);
   }
 
   @override
@@ -49,7 +50,8 @@ class _HomeScreenState extends State<HomeScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(index == 0 ? 'Quotes' : 'Authors'),
+        title: Text(_index == 0 ? 'Quotes' : 'Authors'),
+        actions: [_buildSearchAction()],
         bottom: TabBar(
           controller: _tabController,
           tabs: [
@@ -75,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen>
           ),
         ],
       ),
-      floatingActionButton: index == 0
+      floatingActionButton: _index == 0
           ? FloatingActionButton(
               child: Icon(Icons.add),
               onPressed: () => _onFABClicked(),
@@ -84,17 +86,17 @@ class _HomeScreenState extends State<HomeScreen>
     );
   }
 
-  void _onTabChanged() {
-    final aniValue = _tabController.animation.value;
-    if (aniValue > 0.5 && index != 1) {
-      setState(() {
-        index = 1;
-      });
-    } else if (aniValue <= 0.5 && index != 0) {
-      setState(() {
-        index = 0;
-      });
-    }
+  Widget _buildSearchAction() {
+    return IconButton(
+      icon: Icon(Icons.search),
+      onPressed: () async {
+        await Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SearchScreen()),
+        );
+        _refreshTabs();
+      },
+    );
   }
 
   void _onFABClicked() async {
@@ -104,6 +106,19 @@ class _HomeScreenState extends State<HomeScreen>
     );
     if (quote != null) {
       _refreshTabs();
+    }
+  }
+
+  void _onTabChanged() {
+    final aniValue = _tabController.animation.value;
+    if (aniValue > 0.5 && _index != 1) {
+      setState(() {
+        _index = 1;
+      });
+    } else if (aniValue <= 0.5 && _index != 0) {
+      setState(() {
+        _index = 0;
+      });
     }
   }
 

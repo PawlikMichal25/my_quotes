@@ -28,4 +28,11 @@ class QuotesTabBloc extends Bloc {
     final results = await dao.getQuotes(authorId);
     _quotes.add(Resource.success(data: results));
   }
+
+  Future<void> search(String query) async {
+    _quotes.add(Resource.loading());
+    final words = query.trim().split(" ");
+    final results = await dao.searchQuotes(words);
+    _quotes.add(Resource.success(data: results));
+  }
 }

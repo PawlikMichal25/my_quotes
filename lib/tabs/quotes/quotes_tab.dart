@@ -54,23 +54,25 @@ class QuotesTab extends StatelessWidget {
   }
 
   Widget _buildEmptyView() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(
-          MyQuotesIcons.quotes,
-          size: 120.0,
-          color: Styles.lightGrey,
-        ),
-        SizedBox(height: Dimens.halfDefaultSpacing),
-        Text(
-          'No quotes',
-          style: TextStyle(
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            MyQuotesIcons.quotes,
+            size: 120.0,
             color: Styles.lightGrey,
-            fontSize: 16.0,
           ),
-        ),
-      ],
+          SizedBox(height: Dimens.halfDefaultSpacing),
+          Text(
+            'No quotes',
+            style: TextStyle(
+              color: Styles.lightGrey,
+              fontSize: 16.0,
+            ),
+          ),
+        ],
+      ),
     );
   }
 

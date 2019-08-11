@@ -218,4 +218,50 @@ class Dao {
       whereArgs: [authorId],
     );
   }
+
+  Future<List<Quote>> searchQuotes(List<String> words) async {
+    final buffer = StringBuffer();
+    buffer.write('''
+    SELECT ${Tables.quoteColumnId}, ${Tables.quoteColumnContent}, 
+    ${Tables.authorTableName}.${Tables.authorColumnID}, ${Tables.authorColumnFirstName}, ${Tables.authorColumnLastName}
+    FROM ${Tables.quoteTableName}
+    INNER JOIN ${Tables.authorTableName}
+    ON ${Tables.quoteTableName}.${Tables.quoteColumnAuthorId} == ${Tables.authorTableName}.${Tables.authorColumnID}
+    ''');
+
+    if (words.length > 0) {
+      buffer.write(" WHERE ");
+
+      for (int i = 0; i < words.length; i++) {
+        final word = words[i].replaceAll('\'', '\'\'');
+        buffer.write('''
+            ${Tables.quoteColumnContent} || ${Tables.authorColumnFirstName} || ${Tables.authorColumnLastName} 
+            LIKE '%$word%'
+            ''');
+        if (i != words.length - 1) {
+          buffer.write(" AND ");
+        }
+      }
+    }
+
+    final results = await db.rawQuery(buffer.toString());
+
+    return results.map(
+      (row) {
+        final author = Author(
+          id: row[Tables.authorColumnID] as int,
+          firstName: row[Tables.authorColumnFirstName] as String,
+          lastName: row[Tables.authorColumnLastName] as String,
+        );
+
+        final quote = Quote(
+          id: row[Tables.quoteColumnId] as int,
+          author: author,
+          content: row[Tables.quoteColumnContent] as String,
+        );
+
+        return quote;
+      },
+    ).toList();
+  }
 }
