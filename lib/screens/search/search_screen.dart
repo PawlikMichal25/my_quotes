@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_quotes/commons/resources/strings.dart';
 import 'package:my_quotes/injection/service_location.dart';
 import 'package:my_quotes/tabs/quotes/quotes_tab.dart';
 
@@ -55,7 +56,7 @@ class _SearchScreenState extends State<SearchScreen> {
       cursorColor: Colors.white,
       style: TextStyle(color: Colors.white),
       decoration: InputDecoration(
-        hintText: "Search...",
+        hintText: Strings.search_hint,
         hintStyle: TextStyle(color: Colors.white),
       ),
     );

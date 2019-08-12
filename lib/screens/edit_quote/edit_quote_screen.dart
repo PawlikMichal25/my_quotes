@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_quotes/commons/resources/dimens.dart';
+import 'package:my_quotes/commons/resources/strings.dart';
 import 'package:my_quotes/commons/utils/presentation_formatter.dart';
 import 'package:my_quotes/commons/widgets/toast.dart';
 import 'package:my_quotes/injection/service_location.dart';
@@ -56,7 +57,7 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Edit quote'),
+          title: Text(Strings.edit_quote),
           actions: [_buildDeleteAction()],
         ),
         body: Column(
@@ -106,7 +107,7 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
         maxLines: 2,
         minLines: 1,
         decoration: InputDecoration(
-          labelText: 'Author',
+          labelText: Strings.author,
         ),
       ),
     );
@@ -116,7 +117,7 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
     return Padding(
       padding: const EdgeInsets.all(Dimens.defaultSpacing),
       child: RaisedButton(
-        child: Text("Edit author"),
+        child: Text(Strings.edit_author),
         onPressed: _onEditAuthorClick,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(Dimens.buttonRadius),
@@ -151,8 +152,8 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
         controller: _quoteController,
         textCapitalization: TextCapitalization.sentences,
         decoration: InputDecoration(
-          labelText: 'Quote',
-          errorText: _quoteValid ? null : 'Quote can\'t be empty',
+          labelText: Strings.quote,
+          errorText: _quoteValid ? null : Strings.quote_cant_be_empty,
         ),
       ),
     );
@@ -164,7 +165,7 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
         : RaisedButton(
             padding: const EdgeInsets.symmetric(
                 horizontal: Dimens.buttonActionPadding),
-            child: Text("Save"),
+            child: Text(Strings.save),
             onPressed: _onSaveButtonClicked,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(Dimens.buttonRadius),
@@ -200,7 +201,7 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
       );
 
       if (either.isRight()) {
-        _showSuccessToast('Quote edited');
+        _showSuccessToast(Strings.quote_edited);
         Navigator.pop(context);
       } else {
         setState(() {
@@ -220,7 +221,7 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
       _isProcessing = true;
     });
     await _editQuoteBloc.deleteQuote(quote: widget.quote);
-    _showSuccessToast('Quote deleted');
+    _showSuccessToast(Strings.quote_deleted);
     Navigator.pop(context);
   }
 

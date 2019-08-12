@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:my_quotes/commons/architecture/bloc.dart';
 import 'package:my_quotes/commons/architecture/either.dart';
+import 'package:my_quotes/commons/resources/strings.dart';
 import 'package:my_quotes/db/dao.dart';
 import 'package:my_quotes/model/quote.dart';
 
@@ -21,7 +22,7 @@ class EditQuoteBloc extends Bloc {
     final newQuote = await dao.editQuote(quote: quote, newContent: newContent);
 
     if (newQuote == null) {
-      return Either.left('Failed to edit the quote');
+      return Either.left(Strings.failed_to_edit_the_quote);
     } else {
       return Either.right(newQuote);
     }

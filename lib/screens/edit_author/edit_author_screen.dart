@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_quotes/commons/resources/dimens.dart';
+import 'package:my_quotes/commons/resources/strings.dart';
 import 'package:my_quotes/commons/widgets/toast.dart';
 import 'package:my_quotes/injection/service_location.dart';
 import 'package:my_quotes/model/author.dart';
@@ -52,7 +53,7 @@ class _EditAuthorScreenState extends State<EditAuthorScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit author'),
+        title: Text(Strings.edit_author),
         actions: _buildActions(),
       ),
       body: Column(
@@ -64,8 +65,8 @@ class _EditAuthorScreenState extends State<EditAuthorScreen> {
               textCapitalization: TextCapitalization.words,
               decoration: InputDecoration(
                 errorText:
-                    _firstNameValid ? null : 'First name can\'t be empty',
-                labelText: 'First name',
+                    _firstNameValid ? null : Strings.first_name_cant_be_empty,
+                labelText: Strings.first_name,
               ),
             ),
           ),
@@ -76,7 +77,7 @@ class _EditAuthorScreenState extends State<EditAuthorScreen> {
               controller: _lastNameController,
               textCapitalization: TextCapitalization.words,
               decoration: InputDecoration(
-                labelText: 'Last name',
+                labelText: Strings.last_name,
               ),
             ),
           ),
@@ -84,7 +85,7 @@ class _EditAuthorScreenState extends State<EditAuthorScreen> {
           _isProcessing
               ? CircularProgressIndicator()
               : RaisedButton(
-                  child: Text('Save'),
+                  child: Text(Strings.save),
                   onPressed: () => _onSaveButtonClicked(),
                   padding: const EdgeInsets.symmetric(
                       horizontal: Dimens.buttonActionPadding),
@@ -155,7 +156,7 @@ class _EditAuthorScreenState extends State<EditAuthorScreen> {
       );
 
       if (either.isRight()) {
-        _showSuccessToast('Author edited');
+        _showSuccessToast(Strings.author_edited);
         Navigator.pop(context, EditAuthorResult.authorChanged(either.right));
       } else {
         setState(() {
@@ -171,7 +172,7 @@ class _EditAuthorScreenState extends State<EditAuthorScreen> {
       _isProcessing = true;
     });
     await _editAuthorBloc.deleteAuthor(authorId: widget.author.id);
-    _showSuccessToast('Author deleted');
+    _showSuccessToast(Strings.author_deleted);
     Navigator.pop(context, EditAuthorResult.authorDeleted());
   }
 

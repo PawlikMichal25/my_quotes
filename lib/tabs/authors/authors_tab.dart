@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:my_quotes/commons/resources/dimens.dart';
 import 'package:my_quotes/commons/resources/my_quotes_icons.dart';
+import 'package:my_quotes/commons/resources/strings.dart';
 import 'package:my_quotes/commons/resources/styles.dart';
 import 'package:my_quotes/commons/utils/presentation_formatter.dart';
 import 'package:my_quotes/model/author.dart';
@@ -33,7 +34,7 @@ class AuthorsTab extends StatelessWidget {
             case Status.ERROR:
               return Text(resource.message);
           }
-          return Text('Unknown error');
+          return Text(Strings.unknown_error);
         });
   }
 
@@ -61,7 +62,7 @@ class AuthorsTab extends StatelessWidget {
         ),
         SizedBox(height: Dimens.halfDefaultSpacing),
         Text(
-          'No authors',
+          Strings.no_authors,
           style: TextStyle(
             color: Styles.lightGrey,
             fontSize: 16.0,

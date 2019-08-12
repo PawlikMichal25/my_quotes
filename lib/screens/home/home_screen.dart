@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_quotes/commons/resources/my_quotes_icons.dart';
+import 'package:my_quotes/commons/resources/strings.dart';
 import 'package:my_quotes/injection/service_location.dart';
 import 'package:my_quotes/screens/about/about_screen.dart';
 import 'package:my_quotes/screens/add_quote/add_quote_screen.dart';
@@ -51,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_index == 0 ? 'Quotes' : 'Authors'),
+        title: Text(_index == 0 ? Strings.quotes : Strings.authors),
         actions: [_buildSearchAction(), _buildMoreAction()],
         bottom: TabBar(
           controller: _tabController,
@@ -107,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen>
         return [
           PopupMenuItem<MoreAction>(
             value: MoreAction.about,
-            child: Text('About'),
+            child: Text(Strings.about),
           ),
         ];
       },

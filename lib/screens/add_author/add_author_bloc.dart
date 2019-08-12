@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:my_quotes/commons/architecture/bloc.dart';
 import 'package:my_quotes/commons/architecture/either.dart';
+import 'package:my_quotes/commons/resources/strings.dart';
 import 'package:my_quotes/db/dao.dart';
 import 'package:my_quotes/model/author.dart';
 
@@ -24,7 +25,7 @@ class AddAuthorBloc extends Bloc {
     );
 
     if (id != -1) {
-      return Either.left('This author already exists');
+      return Either.left(Strings.this_author_already_exists);
     } else {
       final author = await dao.addAuthor(
         Author(

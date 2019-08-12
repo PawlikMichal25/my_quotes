@@ -1,0 +1,42 @@
+class Strings {
+  Strings._();
+
+  static const my_quotes = 'My Quotes';
+  static const quotes = 'Quotes';
+  static const authors = 'Authors';
+  static const no_quotes = 'No quotes';
+  static const no_authors = 'No authors';
+  static const search_hint = 'Search...';
+  static const add_author = 'Add author';
+  static const first_name = 'First name';
+  static const last_name = 'Last name';
+  static const first_name_cant_be_empty = 'First name can\'t be empty';
+  static const author_created = 'Author created';
+  static const this_author_already_exists = 'This author already exists';
+  static const add_quote = 'Add quote';
+  static const unknown_error = 'Unknown error';
+  static const author = 'Author';
+  static const you_must_select_an_author = 'You must select an author';
+  static const add_new = 'Add new';
+  static const quote = 'Quote';
+  static const quote_cant_be_empty = 'Quote can\'t be empty';
+  static const quote_created = 'Quote created';
+  static const failed_to_edit_the_author = 'Failed to edit the author';
+  static const edit_author = 'Edit author';
+  static const author_edited = 'Author edited';
+  static const author_deleted = 'Author deleted';
+  static const failed_to_edit_the_quote = 'Failed to edit the quote';
+  static const edit_quote = 'Edit quote';
+  static const quote_edited = 'Quote edited';
+  static const quote_deleted = 'Quote deleted';
+  static const quote_copied_to_clipboard = 'Quote copied to clipboard';
+  static const about = 'About';
+  static const privacy_policy = 'Privacy Policy';
+  static const source_code = 'Source code';
+  static const open_source_licenses = 'Open source licenses';
+  static const could_not_open_the_browser = 'Could not open the browser';
+  static const share = 'Share';
+  static const copy = 'Copy';
+  static const edit = 'Edit';
+  static const save = 'Save';
+}

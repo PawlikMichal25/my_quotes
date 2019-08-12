@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_quotes/commons/architecture/resource.dart';
 import 'package:my_quotes/commons/resources/dimens.dart';
+import 'package:my_quotes/commons/resources/strings.dart';
 import 'package:my_quotes/commons/utils/presentation_formatter.dart';
 import 'package:my_quotes/commons/widgets/toast.dart';
 import 'package:my_quotes/injection/service_location.dart';
@@ -45,7 +46,7 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Add quote'),
+          title: Text(Strings.add_quote),
         ),
         body: StreamBuilder<Resource<List<Author>>>(
             initialData: Resource.loading(),
@@ -68,7 +69,7 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
                 case Status.ERROR:
                   return Text(resource.message);
               }
-              return Text('Unknown error');
+              return Text(Strings.unknown_error);
             }));
   }
 
@@ -103,8 +104,8 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
         builder: (FormFieldState state) {
           return InputDecorator(
             decoration: InputDecoration(
-              labelText: 'Author',
-              errorText: _authorValid ? null : 'You must select an author',
+              labelText: Strings.author,
+              errorText: _authorValid ? null : Strings.you_must_select_an_author,
             ),
             isEmpty: _author == null,
             child: DropdownButtonHideUnderline(
@@ -141,7 +142,7 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
     return Padding(
       padding: const EdgeInsets.all(Dimens.defaultSpacing),
       child: RaisedButton(
-        child: Text('Add new'),
+        child: Text(Strings.add_new),
         onPressed: _onAddNewAuthorClick,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(Dimens.buttonRadius),
@@ -173,8 +174,8 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
         controller: _quoteController,
         textCapitalization: TextCapitalization.sentences,
         decoration: InputDecoration(
-          labelText: 'Quote',
-          errorText: _quoteValid ? null : 'Quote can\'t be empty',
+          labelText: Strings.quote,
+          errorText: _quoteValid ? null : Strings.quote_cant_be_empty,
         ),
       ),
     );
@@ -186,7 +187,7 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
         : RaisedButton(
             padding: const EdgeInsets.symmetric(
                 horizontal: Dimens.buttonActionPadding),
-            child: Text('Save'),
+            child: Text(Strings.save),
             onPressed: () => _onSaveButtonClicked(),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(Dimens.buttonRadius),
@@ -225,7 +226,7 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
       author: _author,
     );
 
-    _showSuccessToast('Quote created');
+    _showSuccessToast(Strings.quote_created);
     Navigator.pop(context, quote);
   }
 

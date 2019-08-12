@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:my_quotes/commons/resources/dimens.dart';
 import 'package:my_quotes/commons/resources/my_quotes_icons.dart';
+import 'package:my_quotes/commons/resources/strings.dart';
 import 'package:my_quotes/commons/resources/styles.dart';
 import 'package:my_quotes/commons/utils/presentation_formatter.dart';
 import 'package:my_quotes/commons/widgets/share_or_copy_quote_dialog.dart';
@@ -36,7 +37,7 @@ class QuotesTab extends StatelessWidget {
             case Status.ERROR:
               return Text(resource.message);
           }
-          return Text('Unknown error');
+          return Text(Strings.unknown_error);
         });
   }
 
@@ -65,7 +66,7 @@ class QuotesTab extends StatelessWidget {
           ),
           SizedBox(height: Dimens.halfDefaultSpacing),
           Text(
-            'No quotes',
+            Strings.no_quotes,
             style: TextStyle(
               color: Styles.lightGrey,
               fontSize: 16.0,
@@ -154,7 +155,7 @@ class QuotesTab extends StatelessWidget {
       case ShareOrCopyQuoteDialogResult.copy:
         Clipboard.setData(ClipboardData(text: formattedQuote));
         Toast.show(
-          message: "Quote copied to clipboard",
+          message: Strings.quote_copied_to_clipboard,
           context: context,
           icon: Icon(Icons.done, color: Colors.white),
           backgroundColor: Colors.green,

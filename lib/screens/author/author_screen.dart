@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_quotes/commons/resources/strings.dart';
 import 'package:my_quotes/injection/service_location.dart';
 import 'package:my_quotes/model/author.dart';
 import 'package:my_quotes/screens/edit_author/edit_author_result.dart';
@@ -55,7 +56,7 @@ class _AuthorScreenState extends State<AuthorScreen> {
               return [
                 PopupMenuItem<_Action>(
                   value: _Action.edit,
-                  child: Text('Edit'),
+                  child: Text(Strings.edit),
                 )
               ];
             },

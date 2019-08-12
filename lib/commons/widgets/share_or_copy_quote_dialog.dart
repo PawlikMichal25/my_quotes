@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_quotes/commons/resources/dimens.dart';
+import 'package:my_quotes/commons/resources/strings.dart';
 import 'package:my_quotes/commons/utils/presentation_formatter.dart';
 import 'package:my_quotes/model/quote.dart';
 
@@ -23,7 +24,7 @@ class ShareOrCopyQuoteDialog extends StatelessWidget {
           },
           icon: Icon(Icons.share),
           label: Text(
-            "Share",
+            Strings.share,
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 16.0),
           ),
@@ -36,7 +37,7 @@ class ShareOrCopyQuoteDialog extends StatelessWidget {
           },
           icon: Icon(Icons.content_copy),
           label: Text(
-            "Copy",
+            Strings.copy,
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 16.0),
           ),

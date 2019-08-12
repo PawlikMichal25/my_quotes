@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_quotes/commons/resources/dimens.dart';
+import 'package:my_quotes/commons/resources/strings.dart';
 import 'package:my_quotes/commons/widgets/toast.dart';
 import 'package:my_quotes/injection/service_location.dart';
 
@@ -41,7 +42,7 @@ class _AddAuthorScreenState extends State<AddAuthorScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add author'),
+        title: Text(Strings.add_author),
       ),
       body: Column(
         children: [
@@ -52,8 +53,8 @@ class _AddAuthorScreenState extends State<AddAuthorScreen> {
               textCapitalization: TextCapitalization.words,
               decoration: InputDecoration(
                 errorText:
-                    _firstNameValid ? null : 'First name can\'t be empty',
-                labelText: 'First name',
+                    _firstNameValid ? null : Strings.first_name_cant_be_empty,
+                labelText: Strings.first_name,
               ),
             ),
           ),
@@ -64,7 +65,7 @@ class _AddAuthorScreenState extends State<AddAuthorScreen> {
               controller: _lastNameController,
               textCapitalization: TextCapitalization.words,
               decoration: InputDecoration(
-                labelText: 'Last name',
+                labelText: Strings.last_name,
               ),
             ),
           ),
@@ -74,7 +75,7 @@ class _AddAuthorScreenState extends State<AddAuthorScreen> {
               : RaisedButton(
                   padding: const EdgeInsets.symmetric(
                       horizontal: Dimens.buttonActionPadding),
-                  child: Text('Save'),
+                  child: Text(Strings.save),
                   onPressed: () => _onSaveButtonClicked(),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(Dimens.buttonRadius),
@@ -117,7 +118,7 @@ class _AddAuthorScreenState extends State<AddAuthorScreen> {
     );
 
     if (either.isRight()) {
-      _showSuccessToast('Author created');
+      _showSuccessToast(Strings.author_created);
       Navigator.pop(context, either.right);
     } else {
       setState(() {
