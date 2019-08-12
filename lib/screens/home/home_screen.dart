@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_quotes/commons/resources/my_quotes_icons.dart';
 import 'package:my_quotes/injection/service_location.dart';
+import 'package:my_quotes/screens/about/about_screen.dart';
 import 'package:my_quotes/screens/add_quote/add_quote_screen.dart';
 import 'package:my_quotes/screens/search/search_screen.dart';
 import 'package:my_quotes/tabs/authors/authors_tab_bloc.dart';
@@ -51,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen>
     return Scaffold(
       appBar: AppBar(
         title: Text(_index == 0 ? 'Quotes' : 'Authors'),
-        actions: [_buildSearchAction()],
+        actions: [_buildSearchAction(), _buildMoreAction()],
         bottom: TabBar(
           controller: _tabController,
           tabs: [
@@ -99,6 +100,31 @@ class _HomeScreenState extends State<HomeScreen>
     );
   }
 
+  Widget _buildMoreAction() {
+    return PopupMenuButton<MoreAction>(
+      onSelected: _onMoreActionSelected,
+      itemBuilder: (BuildContext context) {
+        return [
+          PopupMenuItem<MoreAction>(
+            value: MoreAction.about,
+            child: Text('About'),
+          ),
+        ];
+      },
+    );
+  }
+
+  void _onMoreActionSelected(MoreAction action) async {
+    switch (action) {
+      case MoreAction.about:
+        await Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => AboutScreen()),
+        );
+        break;
+    }
+  }
+
   void _onFABClicked() async {
     final quote = await Navigator.push(
       context,
@@ -126,4 +152,8 @@ class _HomeScreenState extends State<HomeScreen>
     _quotesTabBloc.loadQuotes();
     _authorsTabBloc.loadAuthors();
   }
+}
+
+enum MoreAction {
+  about,
 }
