@@ -1,7 +1,7 @@
 name: my_quotes
 description: Mobile app for storing personal quotes
 
-version: 1.0.1+101
+version: 1.2.1+121
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
