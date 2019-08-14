@@ -25,5 +25,5 @@ Simple mobile app for storing personal quotes
    limitations under the License.
 ```
 
-[Play Store]: https://play.google.com/store/apps/details?id=io.blacklagoonapps.quotes&referrer=utm_source%3Dgithub
+[Play Store]: https://play.google.com/store/apps/details?id=io.blacklagoonapps.quotes
 [Play Store Badge]: https://play.google.com/intl/en_us/badges/images/badge_new.png
