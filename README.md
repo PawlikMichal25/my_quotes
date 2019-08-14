@@ -3,7 +3,13 @@
 
 [![Get it on Google Play][Play Store Badge]][Play Store]
 
-Simple mobile app for storing personal quotes
+Simple mobile app for storing personal quotes.
+
+Some ideas and libraries used:
+- [Provider](https://github.com/rrousselGit/provider) + [Get_it](https://github.com/fluttercommunity/get_it) + Bloc + [RxDart](https://github.com/ReactiveX/rxdart)
+- [Sqflite](https://github.com/tekartik/sqflite) for database
+- custom [Toast](https://github.com/BaranMichal25/my_quotes/blob/master/lib/commons/widgets/toast.dart) implementation
+
 
 # Screenshots
 <img src="screenshots/screenshot-1.png" width="280px" />   <img src="screenshots/screenshot-2.png" width="280px" />   <img src="screenshots/screenshot-3.png" width="280px" />
