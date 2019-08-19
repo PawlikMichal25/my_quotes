@@ -8,7 +8,7 @@ import 'package:my_quotes/screens/edit_quote/edit_quote_bloc.dart';
 import 'package:my_quotes/tabs/authors/authors_tab_bloc.dart';
 import 'package:my_quotes/tabs/quotes/quotes_tab_bloc_provider.dart';
 
-GetIt sl = GetIt();
+GetIt sl = GetIt.instance;
 
 Future<void> setupServiceLocator() async {
   await _setupDatabase();
