@@ -9,6 +9,7 @@ Some ideas and libraries used:
 - [Provider](https://github.com/rrousselGit/provider) + [Get_it](https://github.com/fluttercommunity/get_it) + Bloc + [RxDart](https://github.com/ReactiveX/rxdart)
 - [Sqflite](https://github.com/tekartik/sqflite) for database
 - custom [Toast](https://github.com/BaranMichal25/my_quotes/blob/master/lib/commons/widgets/toast.dart) implementation
+- pedantic and custom [analysis rules](https://github.com/BaranMichal25/my_quotes/blob/master/analysis_options.yaml)
 
 
 # Screenshots
