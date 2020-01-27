@@ -1,3 +1,12 @@
+include: package:pedantic/analysis_options.yaml
+
 analyzer:
   strong-mode:
     implicit-casts: false
+    implicit-dynamic: false
+    # Explanation: https://www.reddit.com/r/FlutterDev/comments/eb546t/tighten_up_you_type_checking_in_preparation_of/
+  errors:
+    # treat missing required parameters as an error (not a hint)
+    missing_required_param: error
+    # treat missing returns as an error (not a hint)
+    missing_return: error

@@ -107,10 +107,10 @@ class AuthorsTab extends StatelessWidget {
     );
   }
 
-  _openAuthorScreen(BuildContext context, Author author) async {
+  Future<void> _openAuthorScreen(BuildContext context, Author author) async {
     await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => AuthorScreen(author: author)),
+      MaterialPageRoute<void>(builder: (context) => AuthorScreen(author: author)),
     );
     onDataChanged();
   }

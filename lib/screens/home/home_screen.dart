@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_quotes/commons/resources/my_quotes_icons.dart';
 import 'package:my_quotes/commons/resources/strings.dart';
 import 'package:my_quotes/injection/service_location.dart';
+import 'package:my_quotes/model/quote.dart';
 import 'package:my_quotes/screens/about/about_screen.dart';
 import 'package:my_quotes/screens/add_quote/add_quote_screen.dart';
 import 'package:my_quotes/screens/search/search_screen.dart';
@@ -94,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen>
       onPressed: () async {
         await Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => SearchScreen()),
+          MaterialPageRoute<void>(builder: (context) => SearchScreen()),
         );
         _refreshTabs();
       },
@@ -120,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen>
       case MoreAction.about:
         await Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => AboutScreen()),
+          MaterialPageRoute<void>(builder: (context) => AboutScreen()),
         );
         break;
     }
@@ -129,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen>
   void _onFABClicked() async {
     final quote = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => AddQuoteScreen()),
+      MaterialPageRoute<Quote>(builder: (context) => AddQuoteScreen()),
     );
     if (quote != null) {
       _refreshTabs();

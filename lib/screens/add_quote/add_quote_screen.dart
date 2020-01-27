@@ -100,7 +100,7 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
   Widget _buildAuthorFormField(List<Author> authors) {
     return Padding(
       padding: const EdgeInsets.all(Dimens.defaultSpacing),
-      child: FormField(
+      child: FormField<Author>(
         builder: (FormFieldState state) {
           return InputDecorator(
             decoration: InputDecoration(
@@ -157,7 +157,7 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
       MaterialPageRoute(builder: (context) => AddAuthorScreen()),
     );
 
-    _addQuoteBloc.loadAuthors();
+    await _addQuoteBloc.loadAuthors();
 
     setState(() {
       _author = author;

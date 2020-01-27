@@ -80,13 +80,14 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
   }
 
   Widget _buildDeleteAction() {
-    if (_isProcessing)
+    if (_isProcessing) {
       return CircularProgressIndicator();
-    else
+    } else {
       return IconButton(
         icon: Icon(Icons.delete),
         onPressed: _deleteQuote,
       );
+    }
   }
 
   Widget _buildAuthorRow() {
@@ -129,7 +130,7 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
   void _onEditAuthorClick() async {
     final result = await Navigator.push(
       context,
-      MaterialPageRoute(
+      MaterialPageRoute<EditAuthorResult>(
           builder: (context) =>
               EditAuthorScreen(author: _author, deletingEnabled: false)),
     );

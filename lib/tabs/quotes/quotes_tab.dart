@@ -130,10 +130,10 @@ class QuotesTab extends StatelessWidget {
     );
   }
 
-  void _onCardClicked(BuildContext context, Quote quote) async {
+  Future<void> _onCardClicked(BuildContext context, Quote quote) async {
     await Navigator.push(
         context,
-        MaterialPageRoute(
+        MaterialPageRoute<void>(
           builder: (context) => EditQuoteScreen(quote: quote),
         ));
     onDataChanged();

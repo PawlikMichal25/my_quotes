@@ -74,7 +74,7 @@ class _AuthorScreenState extends State<AuthorScreen> {
     );
   }
 
-  _onActionSelected(_Action action) async {
+  void _onActionSelected(_Action action) async {
     switch (action) {
       case _Action.edit:
         _editAuthor();
@@ -82,10 +82,10 @@ class _AuthorScreenState extends State<AuthorScreen> {
     }
   }
 
-  _editAuthor() async {
+  void _editAuthor() async {
     final result = await Navigator.push(
       context,
-      MaterialPageRoute(
+      MaterialPageRoute<EditAuthorResult>(
         builder: (context) =>
             EditAuthorScreen(author: widget.author, deletingEnabled: true),
       ),
@@ -96,7 +96,7 @@ class _AuthorScreenState extends State<AuthorScreen> {
       setState(() {
         author = newAuthor;
       });
-      _quotesTabBloc.loadQuotes();
+      await _quotesTabBloc.loadQuotes();
     } else if (result is AuthorDeleted) {
       Navigator.pop(context);
     }

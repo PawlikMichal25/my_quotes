@@ -10,7 +10,7 @@ class Dao {
   Dao(this.db);
 
   Future<Author> addAuthor(Author author) async {
-    Map<String, dynamic> row = {
+    Map<String, String> row = {
       Tables.authorColumnFirstName: author.firstName,
       Tables.authorColumnLastName: author.lastName
     };
@@ -24,7 +24,7 @@ class Dao {
   }
 
   Future<Quote> addQuote(Quote quote) async {
-    Map<String, dynamic> row = {
+    Map<String, dynamic> row = <String, dynamic>{
       Tables.quoteColumnAuthorId: quote.author.id,
       Tables.quoteColumnContent: quote.content
     };
@@ -142,7 +142,7 @@ class Dao {
       columns: [Tables.authorColumnID],
       where:
           "${Tables.authorColumnFirstName} = ? AND ${Tables.authorColumnLastName} = ?",
-      whereArgs: [firstName, lastName],
+      whereArgs: <String>[firstName, lastName],
     );
 
     if (results.length == 1) {
@@ -157,7 +157,7 @@ class Dao {
     String firstName,
     String lastName,
   }) async {
-    final Map<String, dynamic> values = {
+    final Map<String, String> values = {
       Tables.authorColumnFirstName: firstName,
       Tables.authorColumnLastName: lastName,
     };
@@ -165,7 +165,7 @@ class Dao {
       Tables.authorTableName,
       values,
       where: "${Tables.authorColumnID} = ?",
-      whereArgs: [authorId],
+      whereArgs: <int>[authorId],
     );
     if (result == 1) {
       return Author(id: authorId, firstName: firstName, lastName: lastName);
@@ -178,14 +178,14 @@ class Dao {
     Quote quote,
     String newContent,
   }) async {
-    final Map<String, dynamic> values = {
+    final Map<String, String> values = {
       Tables.quoteColumnContent: newContent,
     };
     final result = await db.update(
       Tables.quoteTableName,
       values,
       where: "${Tables.quoteColumnId} = ?",
-      whereArgs: [quote.id],
+      whereArgs: <int>[quote.id],
     );
     if (result == 1) {
       return Quote(id: quote.id, author: quote.author, content: newContent);
@@ -199,7 +199,7 @@ class Dao {
     await db.delete(
       Tables.authorTableName,
       where: "${Tables.authorColumnID} = ?",
-      whereArgs: [authorId],
+      whereArgs: <int>[authorId],
     );
   }
 
@@ -207,7 +207,7 @@ class Dao {
     await db.delete(
       Tables.quoteTableName,
       where: "${Tables.quoteColumnId} = ?",
-      whereArgs: [quoteId],
+      whereArgs: <int>[quoteId],
     );
   }
 
@@ -215,7 +215,7 @@ class Dao {
     await db.delete(
       Tables.quoteTableName,
       where: "${Tables.quoteColumnAuthorId} = ?",
-      whereArgs: [authorId],
+      whereArgs: <int>[authorId],
     );
   }
 
@@ -229,7 +229,7 @@ class Dao {
     ON ${Tables.quoteTableName}.${Tables.quoteColumnAuthorId} == ${Tables.authorTableName}.${Tables.authorColumnID}
     ''');
 
-    if (words.length > 0) {
+    if (words.isNotEmpty) {
       buffer.write(" WHERE ");
 
       for (int i = 0; i < words.length; i++) {

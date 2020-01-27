@@ -43,7 +43,7 @@ class Toast {
       ),
     );
     overlayState.insert(_overlayEntry);
-    await Future.delayed(Duration(seconds: 2000));
+    await Future<void>.delayed(Duration(seconds: 2000));
     _overlayEntry?.remove();
   }
 }
@@ -82,7 +82,7 @@ class _ToastState extends State<_Toast> with SingleTickerProviderStateMixin {
   }
 
   void _scheduleFadeOut() async {
-    await Future.delayed(Duration(milliseconds: 1500));
+    await Future<void>.delayed(Duration(milliseconds: 1500));
     _animationController.reverse();
   }
 
