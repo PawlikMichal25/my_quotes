@@ -64,15 +64,13 @@ class _EditAuthorScreenState extends State<EditAuthorScreen> {
               controller: _firstNameController,
               textCapitalization: TextCapitalization.words,
               decoration: InputDecoration(
-                errorText:
-                    _firstNameValid ? null : Strings.first_name_cant_be_empty,
+                errorText: _firstNameValid ? null : Strings.first_name_cant_be_empty,
                 labelText: Strings.first_name,
               ),
             ),
           ),
           Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: Dimens.defaultSpacing),
+            padding: const EdgeInsets.symmetric(horizontal: Dimens.defaultSpacing),
             child: TextFormField(
               controller: _lastNameController,
               textCapitalization: TextCapitalization.words,
@@ -87,8 +85,7 @@ class _EditAuthorScreenState extends State<EditAuthorScreen> {
               : RaisedButton(
                   child: Text(Strings.save),
                   onPressed: () => _onSaveButtonClicked(),
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: Dimens.buttonActionPadding),
+                  padding: const EdgeInsets.symmetric(horizontal: Dimens.buttonActionPadding),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(Dimens.buttonRadius),
                   ),
@@ -109,21 +106,23 @@ class _EditAuthorScreenState extends State<EditAuthorScreen> {
 
   List<Widget> _buildActions() {
     final delete = _buildDeleteAction();
-    if (delete == null)
+    if (delete == null) {
       return [];
-    else
+    } else {
       return [delete];
+    }
   }
 
   Widget _buildDeleteAction() {
     if (widget.deletingEnabled) {
-      if (_isProcessing)
+      if (_isProcessing) {
         return CircularProgressIndicator();
-      else
+      } else {
         return IconButton(
           icon: Icon(Icons.delete),
           onPressed: _deleteAuthor,
         );
+      }
     }
 
     return null;
@@ -177,8 +176,7 @@ class _EditAuthorScreenState extends State<EditAuthorScreen> {
   }
 
   bool _didAuthorChange(String firstName, String lastName) {
-    return widget.author.firstName == firstName &&
-        widget.author.lastName == lastName;
+    return widget.author.firstName == firstName && widget.author.lastName == lastName;
   }
 
   void _showSuccessToast(String message) {

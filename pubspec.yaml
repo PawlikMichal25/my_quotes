@@ -16,12 +16,15 @@ dependencies:
   sqflite: 1.2.0
   path_provider: 1.5.1
   share: 0.6.3+5
-  url_launcher: ^5.4.1
+  url_launcher: 5.4.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  pedantic: 1.8.0+1
+  pedantic: 1.9.0
+
+dependency_overrides:
+  pedantic: 1.9.0
 
 flutter:
 

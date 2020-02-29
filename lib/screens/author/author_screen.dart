@@ -32,7 +32,7 @@ class _AuthorScreenState extends State<AuthorScreen> {
     _quotesTabBloc = _quotesTabBlocProvider.get(authorId: widget.author.id);
     _quotesTabBloc.loadQuotes();
     _quotesTabBloc.quotesStream.listen((resource) {
-      if (resource.isSuccessful && resource.data.length == 0) {
+      if (resource.isSuccessful && resource.data.isEmpty) {
         Navigator.pop(context);
       }
     });
@@ -48,7 +48,7 @@ class _AuthorScreenState extends State<AuthorScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("${author.firstName} ${author.lastName}"),
+        title: Text('${author.firstName} ${author.lastName}'),
         actions: [
           PopupMenuButton<_Action>(
             onSelected: _onActionSelected,

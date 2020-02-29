@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:my_quotes/db/dao.dart';
 import 'package:my_quotes/model/author.dart';
 import 'package:my_quotes/commons/architecture/bloc.dart';
@@ -11,7 +12,7 @@ class AuthorsTabBloc extends Bloc {
 
   Stream<Resource<List<Author>>> get authorsStream => _authors.stream;
 
-  AuthorsTabBloc({this.dao}) : assert(dao != null);
+  AuthorsTabBloc({@required this.dao}) : assert(dao != null);
 
   @override
   void dispose() {

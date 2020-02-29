@@ -152,7 +152,7 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
   }
 
   void _onAddNewAuthorClick() async {
-    final Author author = await Navigator.push(
+    final author = await Navigator.push<Author>(
       context,
       MaterialPageRoute(builder: (context) => AddAuthorScreen()),
     );
@@ -185,8 +185,7 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
     return _isAddingQuote
         ? CircularProgressIndicator()
         : RaisedButton(
-            padding: const EdgeInsets.symmetric(
-                horizontal: Dimens.buttonActionPadding),
+            padding: const EdgeInsets.symmetric(horizontal: Dimens.buttonActionPadding),
             child: Text(Strings.save),
             onPressed: () => _onSaveButtonClicked(),
             shape: RoundedRectangleBorder(

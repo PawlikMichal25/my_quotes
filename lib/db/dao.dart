@@ -10,9 +10,9 @@ class Dao {
   Dao(this.db);
 
   Future<Author> addAuthor(Author author) async {
-    Map<String, String> row = {
+    final row = {
       Tables.authorColumnFirstName: author.firstName,
-      Tables.authorColumnLastName: author.lastName
+      Tables.authorColumnLastName: author.lastName,
     };
 
     final id = await db.insert(Tables.authorTableName, row);
@@ -24,9 +24,9 @@ class Dao {
   }
 
   Future<Quote> addQuote(Quote quote) async {
-    Map<String, dynamic> row = <String, dynamic>{
+    final row = {
       Tables.quoteColumnAuthorId: quote.author.id,
-      Tables.quoteColumnContent: quote.content
+      Tables.quoteColumnContent: quote.content,
     };
 
     final id = await db.insert(Tables.quoteTableName, row);
@@ -122,8 +122,7 @@ class Dao {
   Future<List<Author>> getAllAuthorsOrdered() async {
     final results = await db.query(
       Tables.authorTableName,
-      orderBy:
-          "${Tables.authorColumnFirstName}, ${Tables.authorColumnLastName}",
+      orderBy: '${Tables.authorColumnFirstName}, ${Tables.authorColumnLastName}',
     );
     return results
         .map(
@@ -140,8 +139,7 @@ class Dao {
     final results = await db.query(
       Tables.authorTableName,
       columns: [Tables.authorColumnID],
-      where:
-          "${Tables.authorColumnFirstName} = ? AND ${Tables.authorColumnLastName} = ?",
+      where: '${Tables.authorColumnFirstName} = ? AND ${Tables.authorColumnLastName} = ?',
       whereArgs: <String>[firstName, lastName],
     );
 
@@ -157,14 +155,14 @@ class Dao {
     String firstName,
     String lastName,
   }) async {
-    final Map<String, String> values = {
+    final values = {
       Tables.authorColumnFirstName: firstName,
       Tables.authorColumnLastName: lastName,
     };
     final result = await db.update(
       Tables.authorTableName,
       values,
-      where: "${Tables.authorColumnID} = ?",
+      where: '${Tables.authorColumnID} = ?',
       whereArgs: <int>[authorId],
     );
     if (result == 1) {
@@ -178,13 +176,13 @@ class Dao {
     Quote quote,
     String newContent,
   }) async {
-    final Map<String, String> values = {
+    final values = {
       Tables.quoteColumnContent: newContent,
     };
     final result = await db.update(
       Tables.quoteTableName,
       values,
-      where: "${Tables.quoteColumnId} = ?",
+      where: '${Tables.quoteColumnId} = ?',
       whereArgs: <int>[quote.id],
     );
     if (result == 1) {
@@ -198,7 +196,7 @@ class Dao {
     await deleteQuotesWithAuthor(authorId: authorId);
     await db.delete(
       Tables.authorTableName,
-      where: "${Tables.authorColumnID} = ?",
+      where: '${Tables.authorColumnID} = ?',
       whereArgs: <int>[authorId],
     );
   }
@@ -206,7 +204,7 @@ class Dao {
   Future<void> deleteQuote({int quoteId}) async {
     await db.delete(
       Tables.quoteTableName,
-      where: "${Tables.quoteColumnId} = ?",
+      where: '${Tables.quoteColumnId} = ?',
       whereArgs: <int>[quoteId],
     );
   }
@@ -214,7 +212,7 @@ class Dao {
   Future<void> deleteQuotesWithAuthor({int authorId}) async {
     await db.delete(
       Tables.quoteTableName,
-      where: "${Tables.quoteColumnAuthorId} = ?",
+      where: '${Tables.quoteColumnAuthorId} = ?',
       whereArgs: <int>[authorId],
     );
   }
@@ -230,16 +228,16 @@ class Dao {
     ''');
 
     if (words.isNotEmpty) {
-      buffer.write(" WHERE ");
+      buffer.write(' WHERE ');
 
-      for (int i = 0; i < words.length; i++) {
+      for (var i = 0; i < words.length; i++) {
         final word = words[i].replaceAll('\'', '\'\'');
         buffer.write('''
             ${Tables.quoteColumnContent} || ${Tables.authorColumnFirstName} || ${Tables.authorColumnLastName} 
             LIKE '%$word%'
             ''');
         if (i != words.length - 1) {
-          buffer.write(" AND ");
+          buffer.write(' AND ');
         }
       }
     }

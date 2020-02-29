@@ -31,7 +31,7 @@ class EditQuoteBloc extends Bloc {
   Future<void> deleteQuote({Quote quote}) async {
     await dao.deleteQuote(quoteId: quote.id);
     final others = await dao.getQuotesWithAuthorId(authorId: quote.author.id);
-    if (others.length == 0) {
+    if (others.isEmpty) {
       await dao.deleteAuthor(authorId: quote.author.id);
     }
   }

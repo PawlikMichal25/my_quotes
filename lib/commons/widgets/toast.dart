@@ -22,9 +22,9 @@ class Toast {
     Color backgroundColor,
     Color textColor,
   ) async {
-    final OverlayState overlayState = Overlay.of(context);
+    final overlayState = Overlay.of(context);
 
-    final OverlayEntry _overlayEntry = OverlayEntry(
+    final _overlayEntry = OverlayEntry(
       builder: (BuildContext context) => Positioned(
         bottom: 50,
         child: Material(

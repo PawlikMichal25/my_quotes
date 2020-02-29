@@ -48,10 +48,11 @@ class QuotesTab extends StatelessWidget {
   }
 
   Widget _buildSuccessBody(List<Quote> quotes) {
-    if (quotes.length == 0)
+    if (quotes.isEmpty) {
       return _buildEmptyView();
-    else
+    } else {
       return _buildQuotesList(quotes);
+    }
   }
 
   Widget _buildEmptyView() {
@@ -107,7 +108,7 @@ class QuotesTab extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  "${quote.content}",
+                  '${quote.content}',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.black,
@@ -141,7 +142,7 @@ class QuotesTab extends StatelessWidget {
 
   void _onCardLongPressed(BuildContext context, Quote quote) async {
     final formattedQuote = PresentationFormatter.formatQuoteForSharing(quote);
-    final ShareOrCopyQuoteDialogResult result = await showDialog(
+    final result = await showDialog<ShareOrCopyQuoteDialogResult>(
       context: context,
       builder: (context) {
         return ShareOrCopyQuoteDialog(quote: quote);
@@ -150,10 +151,10 @@ class QuotesTab extends StatelessWidget {
 
     switch (result) {
       case ShareOrCopyQuoteDialogResult.share:
-        Share.share(formattedQuote);
+        await Share.share(formattedQuote);
         break;
       case ShareOrCopyQuoteDialogResult.copy:
-        Clipboard.setData(ClipboardData(text: formattedQuote));
+        await Clipboard.setData(ClipboardData(text: formattedQuote));
         Toast.show(
           message: Strings.quote_copied_to_clipboard,
           context: context,

@@ -31,7 +31,7 @@ class QuotesTabBloc extends Bloc {
 
   Future<void> search(String query) async {
     _quotes.add(Resource.loading());
-    final words = query.trim().split(" ");
+    final words = query.trim().split(' ');
     final results = await dao.searchQuotes(words);
     _quotes.add(Resource.success(data: results));
   }

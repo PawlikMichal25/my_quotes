@@ -45,10 +45,11 @@ class AuthorsTab extends StatelessWidget {
   }
 
   Widget _buildSuccessBody(List<Author> authors) {
-    if (authors.length == 0)
+    if (authors.isEmpty) {
       return _buildEmptyView();
-    else
+    } else {
       return _buildAuthorsList(authors);
+    }
   }
 
   Widget _buildEmptyView() {
