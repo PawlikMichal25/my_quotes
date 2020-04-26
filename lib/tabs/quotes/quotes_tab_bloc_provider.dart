@@ -1,17 +1,15 @@
-import 'package:flutter/foundation.dart';
-import 'package:my_quotes/db/dao.dart';
+import 'package:my_quotes/domain/get_quotes_use_case.dart';
+import 'package:my_quotes/domain/search_use_case.dart';
 
 import 'quotes_tab_bloc.dart';
 
 class QuotesTabBlocProvider {
-  final Dao dao;
+  final GetQuotesUseCase _getQuotesUseCase;
+  final SearchUseCase _searchUseCase;
 
-  QuotesTabBlocProvider({@required this.dao}) : assert(dao != null);
+  QuotesTabBlocProvider(this._getQuotesUseCase, this._searchUseCase);
 
-  QuotesTabBloc get({int authorId}) {
-    return QuotesTabBloc(
-      dao: dao,
-      authorId: authorId,
-    );
+  QuotesTabBloc get({int authorKey}) {
+    return QuotesTabBloc(_getQuotesUseCase, _searchUseCase, authorKey);
   }
 }

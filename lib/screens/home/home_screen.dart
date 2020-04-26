@@ -19,8 +19,7 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen>
-    with SingleTickerProviderStateMixin {
+class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
   int _index = 0;
   TabController _tabController;
 
@@ -128,13 +127,11 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   void _onFABClicked() async {
-    final quote = await Navigator.push(
+    await Navigator.push(
       context,
       MaterialPageRoute<Quote>(builder: (context) => AddQuoteScreen()),
     );
-    if (quote != null) {
-      _refreshTabs();
-    }
+    _refreshTabs();
   }
 
   void _onTabChanged() {

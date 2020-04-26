@@ -21,11 +21,9 @@ class Strings {
   static const quote = 'Quote';
   static const quote_cant_be_empty = 'Quote can\'t be empty';
   static const quote_created = 'Quote created';
-  static const failed_to_edit_the_author = 'Failed to edit the author';
   static const edit_author = 'Edit author';
   static const author_edited = 'Author edited';
   static const author_deleted = 'Author deleted';
-  static const failed_to_edit_the_quote = 'Failed to edit the quote';
   static const edit_quote = 'Edit quote';
   static const quote_edited = 'Quote edited';
   static const quote_deleted = 'Quote deleted';

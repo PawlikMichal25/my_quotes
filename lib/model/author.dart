@@ -1,12 +1,12 @@
 import 'package:flutter/foundation.dart';
 
 class Author {
-  final int id;
+  final int key;
   final String firstName;
   final String lastName;
 
   const Author({
-    this.id = -1,
+    this.key = -1,
     @required this.firstName,
     @required this.lastName,
   });
@@ -16,15 +16,15 @@ class Author {
       identical(this, other) ||
       other is Author &&
           runtimeType == other.runtimeType &&
-          id == other.id &&
+          key == other.key &&
           firstName == other.firstName &&
           lastName == other.lastName;
 
   @override
-  int get hashCode => id.hashCode ^ firstName.hashCode ^ lastName.hashCode;
+  int get hashCode => key.hashCode ^ firstName.hashCode ^ lastName.hashCode;
 
   @override
   String toString() {
-    return 'Author{id: $id, firstName: $firstName, lastName: $lastName}';
+    return 'Author{key: $key, firstName: $firstName, lastName: $lastName}';
   }
 }

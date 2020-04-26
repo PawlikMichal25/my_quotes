@@ -1,16 +1,13 @@
-import 'package:flutter/foundation.dart';
 import 'package:my_quotes/commons/architecture/bloc.dart';
 import 'package:my_quotes/commons/architecture/either.dart';
 import 'package:my_quotes/commons/resources/strings.dart';
-import 'package:my_quotes/db/dao.dart';
+import 'package:my_quotes/data/authors/authors_database.dart';
 import 'package:my_quotes/model/author.dart';
 
 class AddAuthorBloc extends Bloc {
-  final Dao dao;
+  final AuthorsDatabase _authorsDatabase;
 
-  AddAuthorBloc({
-    @required this.dao,
-  }) : assert(dao != null);
+  AddAuthorBloc(this._authorsDatabase);
 
   @override
   void dispose() {}
@@ -19,15 +16,15 @@ class AddAuthorBloc extends Bloc {
     String firstName,
     String lastName,
   }) async {
-    final id = await dao.getIdOfAuthorWith(
+    final key = await _authorsDatabase.getKeyOfAuthorWith(
       firstName: firstName,
       lastName: lastName,
     );
 
-    if (id != -1) {
+    if (key != -1) {
       return Either.left(Strings.this_author_already_exists);
     } else {
-      final author = await dao.addAuthor(
+      final author = await _authorsDatabase.addAuthor(
         Author(
           firstName: firstName,
           lastName: lastName,

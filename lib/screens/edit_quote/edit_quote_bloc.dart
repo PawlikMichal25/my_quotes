@@ -1,38 +1,18 @@
-import 'package:flutter/foundation.dart';
 import 'package:my_quotes/commons/architecture/bloc.dart';
-import 'package:my_quotes/commons/architecture/either.dart';
-import 'package:my_quotes/commons/resources/strings.dart';
-import 'package:my_quotes/db/dao.dart';
+import 'package:my_quotes/data/quotes/quotes_database.dart';
+import 'package:my_quotes/domain/delete_quote_use_case.dart';
 import 'package:my_quotes/model/quote.dart';
 
 class EditQuoteBloc extends Bloc {
-  final Dao dao;
+  final QuotesDatabase _quotesDatabase;
+  final DeleteQuoteUseCase _deleteQuoteUseCase;
 
-  EditQuoteBloc({
-    @required this.dao,
-  }) : assert(dao != null);
+  EditQuoteBloc(this._quotesDatabase, this._deleteQuoteUseCase);
 
   @override
   void dispose() {}
 
-  Future<Either<String, Quote>> editQuote({
-    Quote quote,
-    String newContent,
-  }) async {
-    final newQuote = await dao.editQuote(quote: quote, newContent: newContent);
+  Future<Quote> editQuote(Quote quote, String newContent) => _quotesDatabase.editQuote(quote, newContent);
 
-    if (newQuote == null) {
-      return Either.left(Strings.failed_to_edit_the_quote);
-    } else {
-      return Either.right(newQuote);
-    }
-  }
-
-  Future<void> deleteQuote({Quote quote}) async {
-    await dao.deleteQuote(quoteId: quote.id);
-    final others = await dao.getQuotesWithAuthorId(authorId: quote.author.id);
-    if (others.isEmpty) {
-      await dao.deleteAuthor(authorId: quote.author.id);
-    }
-  }
+  Future<void> deleteQuote(Quote quote) => _deleteQuoteUseCase.execute(quote);
 }

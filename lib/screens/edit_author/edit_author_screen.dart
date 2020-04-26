@@ -148,21 +148,14 @@ class _EditAuthorScreenState extends State<EditAuthorScreen> {
     if (_didAuthorChange(firstName, lastName)) {
       Navigator.pop(context);
     } else {
-      final either = await _editAuthorBloc.editAuthor(
-        authorId: widget.author.id,
+      final updatedAuthor = await _editAuthorBloc.editAuthor(
+        authorKey: widget.author.key,
         firstName: firstName,
         lastName: lastName,
       );
 
-      if (either.isRight()) {
-        _showSuccessToast(Strings.author_edited);
-        Navigator.pop(context, EditAuthorResult.authorChanged(either.right));
-      } else {
-        setState(() {
-          _isProcessing = false;
-        });
-        _showFailureToast(either.left);
-      }
+      _showSuccessToast(Strings.author_edited);
+      Navigator.pop(context, EditAuthorResult.authorChanged(updatedAuthor));
     }
   }
 
@@ -170,7 +163,7 @@ class _EditAuthorScreenState extends State<EditAuthorScreen> {
     setState(() {
       _isProcessing = true;
     });
-    await _editAuthorBloc.deleteAuthor(authorId: widget.author.id);
+    await _editAuthorBloc.deleteAuthor(widget.author.key);
     _showSuccessToast(Strings.author_deleted);
     Navigator.pop(context, EditAuthorResult.authorDeleted());
   }
@@ -185,15 +178,6 @@ class _EditAuthorScreenState extends State<EditAuthorScreen> {
       context: context,
       icon: Icon(Icons.done, color: Colors.white),
       backgroundColor: Colors.green,
-    );
-  }
-
-  void _showFailureToast(String message) {
-    Toast.show(
-      message: message,
-      context: context,
-      icon: Icon(Icons.close, color: Colors.white),
-      backgroundColor: Colors.red,
     );
   }
 }

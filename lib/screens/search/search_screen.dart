@@ -21,7 +21,7 @@ class _SearchScreenState extends State<SearchScreen> {
   void initState() {
     super.initState();
     _searchController = TextEditingController();
-    _searchController.addListener(_onSearchQueryChanged);
+    _searchController.addListener(() => _onSearchQueryChanged(false));
 
     final _quotesTabBlocProvider = sl.get<QuotesTabBlocProvider>();
     _quotesTabBloc = _quotesTabBlocProvider.get();
@@ -43,7 +43,7 @@ class _SearchScreenState extends State<SearchScreen> {
       body: Provider<QuotesTabBloc>.value(
         value: _quotesTabBloc,
         child: QuotesTab(
-          onDataChanged: _onSearchQueryChanged,
+          onDataChanged: () => _onSearchQueryChanged(true),
         ),
       ),
     );
@@ -62,8 +62,7 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
-  void _onSearchQueryChanged() {
-    final query = _searchController.text;
-    _quotesTabBloc.search(query);
+  void _onSearchQueryChanged(bool revalidateCache) {
+    _quotesTabBloc.search(_searchController.text, revalidateCache: revalidateCache);
   }
 }

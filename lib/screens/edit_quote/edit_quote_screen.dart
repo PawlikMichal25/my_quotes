@@ -131,8 +131,7 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
     final result = await Navigator.push(
       context,
       MaterialPageRoute<EditAuthorResult>(
-          builder: (context) =>
-              EditAuthorScreen(author: _author, deletingEnabled: false)),
+          builder: (context) => EditAuthorScreen(author: _author, deletingEnabled: false)),
     );
 
     if (result is AuthorChanged) {
@@ -164,8 +163,7 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
     return _isProcessing
         ? CircularProgressIndicator()
         : RaisedButton(
-            padding: const EdgeInsets.symmetric(
-                horizontal: Dimens.buttonActionPadding),
+            padding: const EdgeInsets.symmetric(horizontal: Dimens.buttonActionPadding),
             child: Text(Strings.save),
             onPressed: _onSaveButtonClicked,
             shape: RoundedRectangleBorder(
@@ -196,20 +194,9 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
     if (_didQuoteChange(newContent)) {
       Navigator.pop(context);
     } else {
-      final either = await _editQuoteBloc.editQuote(
-        quote: widget.quote,
-        newContent: newContent,
-      );
-
-      if (either.isRight()) {
-        _showSuccessToast(Strings.quote_edited);
-        Navigator.pop(context);
-      } else {
-        setState(() {
-          _isProcessing = false;
-        });
-        _showFailureToast(either.left);
-      }
+      await _editQuoteBloc.editQuote(widget.quote, newContent);
+      _showSuccessToast(Strings.quote_edited);
+      Navigator.pop(context);
     }
   }
 
@@ -221,7 +208,7 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
     setState(() {
       _isProcessing = true;
     });
-    await _editQuoteBloc.deleteQuote(quote: widget.quote);
+    await _editQuoteBloc.deleteQuote(widget.quote);
     _showSuccessToast(Strings.quote_deleted);
     Navigator.pop(context);
   }
@@ -232,15 +219,6 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
       context: context,
       icon: Icon(Icons.done, color: Colors.white),
       backgroundColor: Colors.green,
-    );
-  }
-
-  void _showFailureToast(String message) {
-    Toast.show(
-      message: message,
-      context: context,
-      icon: Icon(Icons.close, color: Colors.white),
-      backgroundColor: Colors.red,
     );
   }
 }

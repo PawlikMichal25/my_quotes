@@ -1,39 +1,24 @@
-import 'package:flutter/foundation.dart';
 import 'package:my_quotes/commons/architecture/bloc.dart';
-import 'package:my_quotes/commons/architecture/either.dart';
-import 'package:my_quotes/commons/resources/strings.dart';
-import 'package:my_quotes/db/dao.dart';
+import 'package:my_quotes/data/authors/authors_database.dart';
+import 'package:my_quotes/domain/delete_author_use_case.dart';
 import 'package:my_quotes/model/author.dart';
 
 class EditAuthorBloc extends Bloc {
-  final Dao dao;
+  final AuthorsDatabase _authorsDatabase;
+  final DeleteAuthorUseCase _deleteAuthorUseCase;
 
-  EditAuthorBloc({
-    @required this.dao,
-  }) : assert(dao != null);
+  EditAuthorBloc(this._authorsDatabase, this._deleteAuthorUseCase);
 
   @override
   void dispose() {}
 
-  Future<Either<String, Author>> editAuthor({
-    int authorId,
-    String firstName,
-    String lastName,
-  }) async {
-    final author = await dao.editAuthor(
-      authorId: authorId,
+  Future<Author> editAuthor({int authorKey, String firstName, String lastName}) {
+    return _authorsDatabase.editAuthor(
+      authorKey: authorKey,
       firstName: firstName,
       lastName: lastName,
     );
-
-    if (author == null) {
-      return Either.left(Strings.failed_to_edit_the_author);
-    } else {
-      return Either.right(author);
-    }
   }
 
-  Future<void> deleteAuthor({int authorId}) async {
-    await dao.deleteAuthor(authorId: authorId);
-  }
+  Future<void> deleteAuthor(int authorKey) => _deleteAuthorUseCase.execute(authorKey);
 }

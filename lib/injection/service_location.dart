@@ -1,6 +1,11 @@
 import 'package:get_it/get_it.dart';
-import 'package:my_quotes/db/dao.dart';
-import 'package:my_quotes/db/app_database.dart';
+import 'package:my_quotes/data/authors/authors_database.dart';
+import 'package:my_quotes/data/quotes/quotes_database.dart';
+import 'package:my_quotes/domain/delete_author_use_case.dart';
+import 'package:my_quotes/domain/delete_quote_use_case.dart';
+import 'package:my_quotes/domain/get_authors_use_case.dart';
+import 'package:my_quotes/domain/get_quotes_use_case.dart';
+import 'package:my_quotes/domain/search_use_case.dart';
 import 'package:my_quotes/screens/add_author/add_author_bloc.dart';
 import 'package:my_quotes/screens/add_quote/add_quote_bloc.dart';
 import 'package:my_quotes/screens/edit_author/edit_author_bloc.dart';
@@ -10,42 +15,30 @@ import 'package:my_quotes/tabs/quotes/quotes_tab_bloc_provider.dart';
 
 GetIt sl = GetIt.instance;
 
-Future<void> setupServiceLocator() async {
-  await _setupDatabase();
+void setupServiceLocator() {
+  _setupData();
+  _setupDomain();
   _setupBlocs();
 }
 
-Future<void> _setupDatabase() async {
-  final database = AppDatabase();
-  sl.registerSingleton<AppDatabase>(database);
+void _setupData() {
+  sl.registerSingleton(AuthorsDatabase());
+  sl.registerSingleton(QuotesDatabase());
+}
 
-  final client = await database.client;
-  final dao = Dao(client);
-  sl.registerFactory<Dao>(() => dao);
+void _setupDomain() {
+  sl.registerFactory(() => DeleteAuthorUseCase(sl.get<AuthorsDatabase>(), sl.get<QuotesDatabase>()));
+  sl.registerFactory(() => DeleteQuoteUseCase(sl.get<AuthorsDatabase>(), sl.get<QuotesDatabase>()));
+  sl.registerFactory(() => GetAuthorsUseCase(sl.get<AuthorsDatabase>()));
+  sl.registerFactory(() => GetQuotesUseCase(sl.get<AuthorsDatabase>(), sl.get<QuotesDatabase>()));
+  sl.registerFactory(() => SearchUseCase(sl.get<AuthorsDatabase>(), sl.get<QuotesDatabase>()));
 }
 
 void _setupBlocs() {
-  sl.registerFactory<AuthorsTabBloc>(() {
-    return AuthorsTabBloc(dao: sl.get<Dao>());
-  });
-
-  sl.registerFactory<QuotesTabBlocProvider>(() {
-    return QuotesTabBlocProvider(dao: sl.get<Dao>());
-  });
-
-  sl.registerFactory<AddQuoteBloc>(() {
-    return AddQuoteBloc(dao: sl.get<Dao>());
-  });
-
-  sl.registerFactory<AddAuthorBloc>(() {
-    return AddAuthorBloc(dao: sl.get<Dao>());
-  });
-
-  sl.registerFactory<EditQuoteBloc>(() {
-    return EditQuoteBloc(dao: sl.get<Dao>());
-  });
-
-  sl.registerFactory<EditAuthorBloc>(() {
-    return EditAuthorBloc(dao: sl.get<Dao>());
-  });
+  sl.registerFactory(() => AuthorsTabBloc(sl.get<GetAuthorsUseCase>()));
+  sl.registerFactory(() => QuotesTabBlocProvider(sl.get<GetQuotesUseCase>(), sl.get<SearchUseCase>()));
+  sl.registerFactory(() => AddQuoteBloc(sl.get<AuthorsDatabase>(), sl.get<QuotesDatabase>()));
+  sl.registerFactory(() => AddAuthorBloc(sl.get<AuthorsDatabase>()));
+  sl.registerFactory(() => EditQuoteBloc(sl.get<QuotesDatabase>(), sl.get<DeleteQuoteUseCase>()));
+  sl.registerFactory(() => EditAuthorBloc(sl.get<AuthorsDatabase>(), sl.get<DeleteAuthorUseCase>()));
 }
