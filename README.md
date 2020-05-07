@@ -1,7 +1,6 @@
+
 # My Quotes
-
-
-[![Get it on Google Play][Play Store Badge]][Play Store]
+[![style: pedantic](https://img.shields.io/badge/style-pedantic-40c4ff.svg)](https://pub.dev/packages/pedantic)   
 
 Simple mobile app for storing personal quotes.
 
@@ -17,6 +16,9 @@ Some ideas and libraries used:
 This project was originally created using BLOC, [Sqflite](https://github.com/tekartik/sqflite) and without UseCases. 
 If you're more interested in that, you can check out [bloc_sqflite](https://github.com/BaranMichal25/my_quotes/tree/bloc_sqflite) branch. 
 Although it also has less features than master branch.
+
+# Google Play
+[![Get it on Google Play][Play Store Badge]][Play Store]
 
 # Screenshots
 <img src="screenshots/screenshot-1.png" width="280px" />   <img src="screenshots/screenshot-2.png" width="280px" />   <img src="screenshots/screenshot-3.png" width="280px" />
