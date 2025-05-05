@@ -3,12 +3,12 @@ import 'package:hive/hive.dart';
 
 import 'package:my_quotes/screens/home/home_screen.dart';
 
-import 'commons/resources/strings.dart';
-import 'commons/resources/styles.dart';
+import 'package:my_quotes/commons/resources/strings.dart';
+import 'package:my_quotes/commons/resources/styles.dart';
 
 class MyQuotesApp extends StatefulWidget {
   @override
-  _MyQuotesAppState createState() => _MyQuotesAppState();
+  State<MyQuotesApp> createState() => _MyQuotesAppState();
 }
 
 class _MyQuotesAppState extends State<MyQuotesApp> {

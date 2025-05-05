@@ -12,7 +12,7 @@ class EditAuthorBloc extends Bloc {
   @override
   void dispose() {}
 
-  Future<Author> editAuthor({int authorKey, String firstName, String lastName}) {
+  Future<Author> editAuthor({required int authorKey, required String firstName, required String lastName}) {
     return _authorsDatabase.editAuthor(
       authorKey: authorKey,
       firstName: firstName,

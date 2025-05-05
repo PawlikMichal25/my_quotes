@@ -10,7 +10,7 @@ class Strings {
   static const add_author = 'Add author';
   static const first_name = 'First name';
   static const last_name = 'Last name';
-  static const first_name_cant_be_empty = 'First name can\'t be empty';
+  static const first_name_cant_be_empty = "First name can't be empty";
   static const author_created = 'Author created';
   static const this_author_already_exists = 'This author already exists';
   static const add_quote = 'Add quote';
@@ -19,7 +19,7 @@ class Strings {
   static const you_must_select_an_author = 'You must select an author';
   static const add_new = 'Add new';
   static const quote = 'Quote';
-  static const quote_cant_be_empty = 'Quote can\'t be empty';
+  static const quote_cant_be_empty = "Quote can't be empty";
   static const quote_created = 'Quote created';
   static const edit_author = 'Edit author';
   static const author_edited = 'Author edited';

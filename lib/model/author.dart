@@ -1,14 +1,12 @@
-import 'package:flutter/foundation.dart';
-
 class Author {
   final int key;
   final String firstName;
   final String lastName;
 
   const Author({
+    required this.firstName,
+    required this.lastName,
     this.key = -1,
-    @required this.firstName,
-    @required this.lastName,
   });
 
   @override

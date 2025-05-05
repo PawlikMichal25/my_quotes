@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:my_quotes/commons/resources/dimens.dart';
 import 'package:my_quotes/commons/resources/my_quotes_icons.dart';
@@ -13,33 +12,35 @@ import 'package:my_quotes/tabs/authors/authors_tab_bloc.dart';
 import 'package:provider/provider.dart';
 
 class AuthorsTab extends StatelessWidget {
-  final Function onDataChanged;
+  final VoidCallback onDataChanged;
 
-  AuthorsTab({@required this.onDataChanged});
+  const AuthorsTab({required this.onDataChanged});
 
   @override
   Widget build(BuildContext context) {
     final bloc = Provider.of<AuthorsTabBloc>(context);
     return StreamBuilder<Resource<List<Author>>>(
-        initialData: Resource.loading(),
-        stream: bloc.authorsStream,
-        builder: (_, AsyncSnapshot<Resource<List<Author>>> snapshot) {
-          final resource = snapshot.data;
+      initialData: Resource.loading(),
+      stream: bloc.authorsStream,
+      builder: (_, AsyncSnapshot<Resource<List<Author>>> snapshot) {
+        final resource = snapshot.data;
 
-          switch (resource.status) {
-            case Status.LOADING:
-              return _buildProgressIndicator();
-            case Status.SUCCESS:
-              return _buildSuccessBody(resource.data);
-            case Status.ERROR:
-              return Text(resource.message);
-          }
-          return Text(Strings.unknown_error);
-        });
+        switch (resource?.status) {
+          case Status.LOADING:
+            return _buildProgressIndicator();
+          case Status.SUCCESS:
+            return _buildSuccessBody(resource!.data!);
+          case Status.ERROR:
+            return Text(resource!.message!);
+          case null:
+            return const Text(Strings.unknown_error);
+        }
+      },
+    );
   }
 
   Widget _buildProgressIndicator() {
-    return Center(
+    return const Center(
       child: CircularProgressIndicator(),
     );
   }
@@ -58,15 +59,15 @@ class AuthorsTab extends StatelessWidget {
       children: [
         Icon(
           MyQuotesIcons.authors,
-          size: 120.0,
+          size: 120,
           color: Styles.lightGrey,
         ),
-        SizedBox(height: Dimens.halfDefaultSpacing),
+        const SizedBox(height: Dimens.halfDefaultSpacing),
         Text(
           Strings.no_authors,
           style: TextStyle(
             color: Styles.lightGrey,
-            fontSize: 16.0,
+            fontSize: 16,
           ),
         ),
       ],
@@ -78,7 +79,7 @@ class AuthorsTab extends StatelessWidget {
       child: ListView.separated(
         itemCount: authors.length,
         separatorBuilder: (context, index) => Divider(
-          height: 0.0,
+          height: 0,
           color: Styles.darkGrey,
         ),
         itemBuilder: (BuildContext context, int index) {
@@ -97,9 +98,9 @@ class AuthorsTab extends StatelessWidget {
           padding: const EdgeInsets.all(Dimens.defaultSpacing),
           child: Text(
             PresentationFormatter.formatAuthor(author),
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.black,
-              fontSize: 16.0,
+              fontSize: 16,
             ),
           ),
         ),
@@ -109,7 +110,6 @@ class AuthorsTab extends StatelessWidget {
   }
 
   Future<void> _openAuthorScreen(BuildContext context, Author author) async {
-    print(author);
     await Navigator.push(
       context,
       MaterialPageRoute<void>(builder: (context) => AuthorScreen(author: author)),

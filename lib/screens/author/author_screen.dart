@@ -12,15 +12,15 @@ import 'package:provider/provider.dart';
 class AuthorScreen extends StatefulWidget {
   final Author author;
 
-  AuthorScreen({this.author});
+  const AuthorScreen({required this.author});
 
   @override
-  _AuthorScreenState createState() => _AuthorScreenState();
+  State<AuthorScreen> createState() => _AuthorScreenState();
 }
 
 class _AuthorScreenState extends State<AuthorScreen> {
-  Author author;
-  QuotesTabBloc _quotesTabBloc;
+  late Author author;
+  late QuotesTabBloc _quotesTabBloc;
 
   @override
   void initState() {
@@ -28,8 +28,8 @@ class _AuthorScreenState extends State<AuthorScreen> {
 
     author = widget.author;
 
-    final _quotesTabBlocProvider = sl.get<QuotesTabBlocProvider>();
-    _quotesTabBloc = _quotesTabBlocProvider.get(authorKey: widget.author.key);
+    final quotesTabBlocProvider = sl.get<QuotesTabBlocProvider>();
+    _quotesTabBloc = quotesTabBlocProvider.get(authorKey: widget.author.key);
     _quotesTabBloc.loadQuotes();
   }
 
@@ -49,10 +49,10 @@ class _AuthorScreenState extends State<AuthorScreen> {
             onSelected: _onActionSelected,
             itemBuilder: (BuildContext context) {
               return [
-                PopupMenuItem<_Action>(
+                const PopupMenuItem<_Action>(
                   value: _Action.edit,
                   child: Text(Strings.edit),
-                )
+                ),
               ];
             },
           ),
@@ -69,15 +69,14 @@ class _AuthorScreenState extends State<AuthorScreen> {
     );
   }
 
-  void _onActionSelected(_Action action) async {
+  Future<void> _onActionSelected(_Action action) async {
     switch (action) {
       case _Action.edit:
-        _editAuthor();
-        break;
+        await _editAuthor();
     }
   }
 
-  void _editAuthor() async {
+  Future<void> _editAuthor() async {
     final result = await Navigator.push(
       context,
       MaterialPageRoute<EditAuthorResult>(

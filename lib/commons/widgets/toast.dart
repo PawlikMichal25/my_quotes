@@ -1,22 +1,18 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class Toast {
   static void show({
-    @required String message,
-    @required BuildContext context,
-    Icon icon,
+    required String message,
+    required BuildContext context,
+    Icon? icon,
     Color backgroundColor = const Color(0xFF424242),
     Color textColor = Colors.white,
   }) {
-    assert(message != null);
-    assert(context != null);
-
     _show(icon, message, context, backgroundColor, textColor);
   }
 
-  static void _show(
-    Icon icon,
+  static Future<void> _show(
+    Icon? icon,
     String message,
     BuildContext context,
     Color backgroundColor,
@@ -24,7 +20,7 @@ class Toast {
   ) async {
     final overlayState = Overlay.of(context);
 
-    final _overlayEntry = OverlayEntry(
+    final overlayEntry = OverlayEntry(
       builder: (BuildContext context) => Positioned(
         bottom: 50,
         child: Material(
@@ -42,23 +38,23 @@ class Toast {
         ),
       ),
     );
-    overlayState.insert(_overlayEntry);
-    await Future<void>.delayed(Duration(seconds: 2000));
-    _overlayEntry?.remove();
+    overlayState.insert(overlayEntry);
+    await Future<void>.delayed(const Duration(seconds: 2000));
+    overlayEntry.remove();
   }
 }
 
 class _Toast extends StatefulWidget {
-  final Icon icon;
+  final Icon? icon;
   final String message;
-  final Color backgroundColor;
-  final Color textColor;
+  final Color? backgroundColor;
+  final Color? textColor;
 
-  _Toast({
-    this.icon,
-    this.message,
-    this.backgroundColor,
-    this.textColor,
+  const _Toast({
+    required this.icon,
+    required this.message,
+    required this.backgroundColor,
+    required this.textColor,
   });
 
   @override
@@ -66,23 +62,23 @@ class _Toast extends StatefulWidget {
 }
 
 class _ToastState extends State<_Toast> with SingleTickerProviderStateMixin {
-  AnimationController _animationController;
+  late AnimationController _animationController;
 
   @override
   void initState() {
     super.initState();
     _animationController = AnimationController(
-      duration: Duration(milliseconds: 500),
-      lowerBound: 0.0,
-      upperBound: 1.0,
+      duration: const Duration(milliseconds: 500),
+      lowerBound: 0,
+      upperBound: 1,
       vsync: this,
     );
     _animationController.forward();
     _scheduleFadeOut();
   }
 
-  void _scheduleFadeOut() async {
-    await Future<void>.delayed(Duration(milliseconds: 1500));
+  Future<void> _scheduleFadeOut() async {
+    await Future<void>.delayed(const Duration(milliseconds: 1500));
     _animationController.reverse();
   }
 
@@ -120,10 +116,10 @@ class _ToastState extends State<_Toast> with SingleTickerProviderStateMixin {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        widget.icon,
+        widget.icon!,
         Flexible(
           child: Padding(
-            padding: const EdgeInsets.only(left: 4.0),
+            padding: const EdgeInsets.only(left: 4),
             child: Text(
               widget.message,
               softWrap: true,

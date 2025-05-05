@@ -8,7 +8,7 @@ class GetQuotesUseCase {
 
   GetQuotesUseCase(this._authorsDatabase, this._quotesDatabase);
 
-  Future<List<Quote>> execute(int authorKey) async {
+  Future<List<Quote>> execute(int? authorKey) async {
     final authors = await _authorsDatabase.getAllAuthors();
     if (authorKey == null) {
       return _quotesDatabase.getAllQuotes(authors);

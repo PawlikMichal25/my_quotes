@@ -6,34 +6,31 @@ import 'package:my_quotes/injection/service_location.dart';
 import 'package:my_quotes/model/author.dart';
 import 'package:my_quotes/screens/edit_author/edit_author_result.dart';
 
-import 'edit_author_bloc.dart';
+import 'package:my_quotes/screens/edit_author/edit_author_bloc.dart';
 
 class EditAuthorScreen extends StatefulWidget {
   final Author author;
   final bool deletingEnabled;
 
-  EditAuthorScreen({@required this.author, @required this.deletingEnabled});
+  const EditAuthorScreen({required this.author, required this.deletingEnabled});
 
   @override
-  _EditAuthorScreenState createState() => _EditAuthorScreenState();
+  State<EditAuthorScreen> createState() => _EditAuthorScreenState();
 }
 
 class _EditAuthorScreenState extends State<EditAuthorScreen> {
-  EditAuthorBloc _editAuthorBloc;
+  late EditAuthorBloc _editAuthorBloc;
 
   bool _firstNameValid = true;
   bool _isProcessing = false;
-  TextEditingController _firstNameController;
-  TextEditingController _lastNameController;
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
 
     _editAuthorBloc = sl.get<EditAuthorBloc>();
-
-    _firstNameController = TextEditingController();
-    _lastNameController = TextEditingController();
 
     _firstNameController.text = widget.author.firstName;
     _lastNameController.text = widget.author.lastName;
@@ -53,7 +50,7 @@ class _EditAuthorScreenState extends State<EditAuthorScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(Strings.edit_author),
+        title: const Text(Strings.edit_author),
         actions: _buildActions(),
       ),
       body: Column(
@@ -74,21 +71,23 @@ class _EditAuthorScreenState extends State<EditAuthorScreen> {
             child: TextFormField(
               controller: _lastNameController,
               textCapitalization: TextCapitalization.words,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: Strings.last_name,
               ),
             ),
           ),
-          SizedBox(height: Dimens.tripleDefaultSpacing),
+          const SizedBox(height: Dimens.tripleDefaultSpacing),
           _isProcessing
-              ? CircularProgressIndicator()
-              : RaisedButton(
-                  child: Text(Strings.save),
+              ? const CircularProgressIndicator()
+              : ElevatedButton(
                   onPressed: () => _onSaveButtonClicked(),
-                  padding: const EdgeInsets.symmetric(horizontal: Dimens.buttonActionPadding),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(Dimens.buttonRadius),
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(horizontal: Dimens.buttonActionPadding),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(Dimens.buttonRadius),
+                    ),
                   ),
+                  child: const Text(Strings.save),
                 ),
         ],
       ),
@@ -113,13 +112,13 @@ class _EditAuthorScreenState extends State<EditAuthorScreen> {
     }
   }
 
-  Widget _buildDeleteAction() {
+  Widget? _buildDeleteAction() {
     if (widget.deletingEnabled) {
       if (_isProcessing) {
-        return CircularProgressIndicator();
+        return const CircularProgressIndicator();
       } else {
         return IconButton(
-          icon: Icon(Icons.delete),
+          icon: const Icon(Icons.delete),
           onPressed: _deleteAuthor,
         );
       }
@@ -144,7 +143,7 @@ class _EditAuthorScreenState extends State<EditAuthorScreen> {
     }
   }
 
-  void _editAuthor(String firstName, String lastName) async {
+  Future<void> _editAuthor(String firstName, String lastName) async {
     if (_didAuthorChange(firstName, lastName)) {
       Navigator.pop(context);
     } else {
@@ -159,7 +158,7 @@ class _EditAuthorScreenState extends State<EditAuthorScreen> {
     }
   }
 
-  void _deleteAuthor() async {
+  Future<void> _deleteAuthor() async {
     setState(() {
       _isProcessing = true;
     });
@@ -176,7 +175,7 @@ class _EditAuthorScreenState extends State<EditAuthorScreen> {
     Toast.show(
       message: message,
       context: context,
-      icon: Icon(Icons.done, color: Colors.white),
+      icon: const Icon(Icons.done, color: Colors.white),
       backgroundColor: Colors.green,
     );
   }

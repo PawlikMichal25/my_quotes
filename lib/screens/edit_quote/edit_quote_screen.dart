@@ -9,25 +9,25 @@ import 'package:my_quotes/model/quote.dart';
 import 'package:my_quotes/screens/edit_author/edit_author_result.dart';
 import 'package:my_quotes/screens/edit_author/edit_author_screen.dart';
 
-import 'edit_quote_bloc.dart';
+import 'package:my_quotes/screens/edit_quote/edit_quote_bloc.dart';
 
 class EditQuoteScreen extends StatefulWidget {
   final Quote quote;
 
-  EditQuoteScreen({@required this.quote});
+  const EditQuoteScreen({required this.quote});
 
   @override
-  _EditQuoteScreenState createState() => _EditQuoteScreenState();
+  State<EditQuoteScreen> createState() => _EditQuoteScreenState();
 }
 
 class _EditQuoteScreenState extends State<EditQuoteScreen> {
-  EditQuoteBloc _editQuoteBloc;
-  Author _author;
+  late EditQuoteBloc _editQuoteBloc;
+  late Author _author;
 
   bool _quoteValid = true;
   bool _isProcessing = false;
-  TextEditingController _authorController;
-  TextEditingController _quoteController;
+  final _authorController = TextEditingController();
+  final _quoteController = TextEditingController();
 
   @override
   void initState() {
@@ -35,10 +35,8 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
 
     _author = widget.quote.author;
 
-    _authorController = TextEditingController();
     _authorController.text = PresentationFormatter.formatAuthor(_author);
 
-    _quoteController = TextEditingController();
     _quoteController.text = widget.quote.content;
     _quoteController.addListener(_onQuoteFormChanged);
 
@@ -56,18 +54,19 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(Strings.edit_quote),
-          actions: [_buildDeleteAction()],
-        ),
-        body: Column(
-          children: [
-            _buildAuthorRow(),
-            _buildQuoteForm(),
-            SizedBox(height: Dimens.tripleDefaultSpacing),
-            _buildSaveButton(),
-          ],
-        ));
+      appBar: AppBar(
+        title: const Text(Strings.edit_quote),
+        actions: [_buildDeleteAction()],
+      ),
+      body: Column(
+        children: [
+          _buildAuthorRow(),
+          _buildQuoteForm(),
+          const SizedBox(height: Dimens.tripleDefaultSpacing),
+          _buildSaveButton(),
+        ],
+      ),
+    );
   }
 
   void _onQuoteFormChanged() {
@@ -81,10 +80,10 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
 
   Widget _buildDeleteAction() {
     if (_isProcessing) {
-      return CircularProgressIndicator();
+      return const CircularProgressIndicator();
     } else {
       return IconButton(
-        icon: Icon(Icons.delete),
+        icon: const Icon(Icons.delete),
         onPressed: _deleteQuote,
       );
     }
@@ -107,7 +106,7 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
         readOnly: true,
         maxLines: 2,
         minLines: 1,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           labelText: Strings.author,
         ),
       ),
@@ -117,21 +116,24 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
   Widget _buildEditAuthorButton() {
     return Padding(
       padding: const EdgeInsets.all(Dimens.defaultSpacing),
-      child: RaisedButton(
-        child: Text(Strings.edit_author),
+      child: ElevatedButton(
         onPressed: _onEditAuthorClick,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(Dimens.buttonRadius),
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(Dimens.buttonRadius),
+          ),
         ),
+        child: const Text(Strings.edit_author),
       ),
     );
   }
 
-  void _onEditAuthorClick() async {
+  Future<void> _onEditAuthorClick() async {
     final result = await Navigator.push(
       context,
       MaterialPageRoute<EditAuthorResult>(
-          builder: (context) => EditAuthorScreen(author: _author, deletingEnabled: false)),
+        builder: (context) => EditAuthorScreen(author: _author, deletingEnabled: false),
+      ),
     );
 
     if (result is AuthorChanged) {
@@ -161,14 +163,16 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
 
   Widget _buildSaveButton() {
     return _isProcessing
-        ? CircularProgressIndicator()
-        : RaisedButton(
-            padding: const EdgeInsets.symmetric(horizontal: Dimens.buttonActionPadding),
-            child: Text(Strings.save),
+        ? const CircularProgressIndicator()
+        : ElevatedButton(
             onPressed: _onSaveButtonClicked,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(Dimens.buttonRadius),
+            style: ElevatedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(horizontal: Dimens.buttonActionPadding),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(Dimens.buttonRadius),
+              ),
             ),
+            child: const Text(Strings.save),
           );
   }
 
@@ -190,7 +194,7 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
     }
   }
 
-  void _editQuote(String newContent) async {
+  Future<void> _editQuote(String newContent) async {
     if (_didQuoteChange(newContent)) {
       Navigator.pop(context);
     } else {
@@ -204,7 +208,7 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
     return widget.quote.content == newContent;
   }
 
-  void _deleteQuote() async {
+  Future<void> _deleteQuote() async {
     setState(() {
       _isProcessing = true;
     });
@@ -217,7 +221,7 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
     Toast.show(
       message: message,
       context: context,
-      icon: Icon(Icons.done, color: Colors.white),
+      icon: const Icon(Icons.done, color: Colors.white),
       backgroundColor: Colors.green,
     );
   }

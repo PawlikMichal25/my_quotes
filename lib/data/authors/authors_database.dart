@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+import 'package:collection/collection.dart';
 import 'package:my_quotes/data/authors/author_entity.dart';
 import 'package:my_quotes/data/boxes.dart';
 import 'package:my_quotes/model/author.dart';
@@ -12,7 +13,7 @@ class AuthorsDatabase {
       final entity = entities[key];
       return Author(
         key: key as int,
-        firstName: entity.firstName,
+        firstName: entity!.firstName,
         lastName: entity.lastName,
       );
     }).toList();
@@ -43,17 +44,16 @@ class AuthorsDatabase {
     );
   }
 
-  Future<int> getKeyOfAuthorWith({String firstName, String lastName}) async {
+  Future<int> getKeyOfAuthorWith({required String firstName, required String lastName}) async {
     final authors = await getAllAuthors();
-    final author = authors.firstWhere(
+    final author = authors.firstWhereOrNull(
       (author) => author.firstName == firstName && author.lastName == lastName,
-      orElse: () => null,
     );
 
     return author?.key ?? -1;
   }
 
-  Future<Author> editAuthor({int authorKey, String firstName, String lastName}) async {
+  Future<Author> editAuthor({required int authorKey, required String firstName, required String lastName}) async {
     final entity = AuthorEntity()
       ..firstName = firstName
       ..lastName = lastName;

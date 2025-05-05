@@ -16,25 +16,25 @@ import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
   int _index = 0;
-  TabController _tabController;
+  late TabController _tabController;
 
-  QuotesTabBloc _quotesTabBloc;
-  AuthorsTabBloc _authorsTabBloc;
+  late QuotesTabBloc _quotesTabBloc;
+  late AuthorsTabBloc _authorsTabBloc;
 
   @override
   void initState() {
     super.initState();
 
     _tabController = TabController(vsync: this, length: 2);
-    _tabController.animation.addListener(_onTabChanged);
+    _tabController.animation!.addListener(_onTabChanged);
 
-    final _quotesTabBlocProvider = sl.get<QuotesTabBlocProvider>();
-    _quotesTabBloc = _quotesTabBlocProvider.get();
+    final quotesTabBlocProvider = sl.get<QuotesTabBlocProvider>();
+    _quotesTabBloc = quotesTabBlocProvider.get();
     _authorsTabBloc = sl.get<AuthorsTabBloc>();
 
     _refreshTabs();
@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         actions: [_buildSearchAction(), _buildMoreAction()],
         bottom: TabBar(
           controller: _tabController,
-          tabs: [
+          tabs: const [
             Tab(icon: Icon(MyQuotesIcons.quotes)),
             Tab(icon: Icon(MyQuotesIcons.authors)),
           ],
@@ -81,7 +81,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       ),
       floatingActionButton: _index == 0
           ? FloatingActionButton(
-              child: Icon(Icons.add),
+              child: const Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
               onPressed: () => _onFABClicked(),
             )
           : null,
@@ -90,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
   Widget _buildSearchAction() {
     return IconButton(
-      icon: Icon(Icons.search),
+      icon: const Icon(Icons.search),
       onPressed: () async {
         await Navigator.push(
           context,
@@ -106,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       onSelected: _onMoreActionSelected,
       itemBuilder: (BuildContext context) {
         return [
-          PopupMenuItem<MoreAction>(
+          const PopupMenuItem<MoreAction>(
             value: MoreAction.about,
             child: Text(Strings.about),
           ),
@@ -115,18 +118,17 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     );
   }
 
-  void _onMoreActionSelected(MoreAction action) async {
+  Future<void> _onMoreActionSelected(MoreAction action) async {
     switch (action) {
       case MoreAction.about:
         await Navigator.push(
           context,
           MaterialPageRoute<void>(builder: (context) => AboutScreen()),
         );
-        break;
     }
   }
 
-  void _onFABClicked() async {
+  Future<void> _onFABClicked() async {
     await Navigator.push(
       context,
       MaterialPageRoute<Quote>(builder: (context) => AddQuoteScreen()),
@@ -135,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   }
 
   void _onTabChanged() {
-    final aniValue = _tabController.animation.value;
+    final aniValue = _tabController.animation!.value;
     if (aniValue > 0.5 && _index != 1) {
       setState(() {
         _index = 1;

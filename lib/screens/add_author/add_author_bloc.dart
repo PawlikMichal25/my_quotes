@@ -13,8 +13,8 @@ class AddAuthorBloc extends Bloc {
   void dispose() {}
 
   Future<Either<String, Author>> addAuthor({
-    String firstName,
-    String lastName,
+    required String firstName,
+    required String lastName,
   }) async {
     final key = await _authorsDatabase.getKeyOfAuthorWith(
       firstName: firstName,

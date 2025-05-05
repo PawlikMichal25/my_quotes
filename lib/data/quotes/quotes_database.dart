@@ -13,8 +13,8 @@ class QuotesDatabase {
       final entity = entities[key];
       return Quote(
         key: key as int,
-        author: authors.firstWhere((author) => author.key == entity.authorKey),
-        content: entity.content,
+        author: authors.firstWhere((author) => author.key == entity!.authorKey),
+        content: entity!.content,
       );
     }).toList();
   }
@@ -60,7 +60,7 @@ class QuotesDatabase {
   Future<void> deleteQuotesWithAuthor(int authorKey) async {
     final box = await Hive.openBox<QuoteEntity>(Boxes.quotes);
     final quotes = box.toMap();
-    final futures = <Future>[];
+    final futures = <Future<void>>[];
     for (final entity in quotes.entries) {
       if (entity.value.authorKey == authorKey) {
         futures.add(box.delete(entity.key));

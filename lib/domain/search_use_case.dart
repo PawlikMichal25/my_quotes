@@ -6,7 +6,7 @@ class SearchUseCase {
   final AuthorsDatabase _authorsDatabase;
   final QuotesDatabase _quotesDatabase;
 
-  List<Quote> _quotesCache;
+  List<Quote>? _quotesCache;
 
   SearchUseCase(this._authorsDatabase, this._quotesDatabase);
 
@@ -30,7 +30,7 @@ class SearchUseCase {
       _quotesCache = quotes;
     }
 
-    return _quotesCache;
+    return _quotesCache!;
   }
 
   bool _quoteContainsWords(Quote quote, List<String> words) {

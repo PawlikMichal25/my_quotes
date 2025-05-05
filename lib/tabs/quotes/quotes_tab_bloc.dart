@@ -8,7 +8,7 @@ import 'package:rxdart/rxdart.dart';
 class QuotesTabBloc extends Bloc {
   final GetQuotesUseCase _getQuotesUseCase;
   final SearchUseCase _searchUseCase;
-  final int authorKey;
+  final int? authorKey;
 
   final _quotes = BehaviorSubject<Resource<List<Quote>>>();
 

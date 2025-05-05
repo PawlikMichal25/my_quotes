@@ -7,7 +7,7 @@ import 'package:my_quotes/model/quote.dart';
 class ShareOrCopyQuoteDialog extends StatelessWidget {
   final Quote quote;
 
-  const ShareOrCopyQuoteDialog({this.quote});
+  const ShareOrCopyQuoteDialog({required this.quote});
 
   @override
   Widget build(BuildContext context) {
@@ -18,31 +18,33 @@ class ShareOrCopyQuoteDialog extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
       ),
       children: [
-        FlatButton.icon(
+        TextButton.icon(
           onPressed: () {
             Navigator.pop(context, ShareOrCopyQuoteDialogResult.share);
           },
-          icon: Icon(Icons.share),
-          label: Text(
+          icon: const Icon(Icons.share, color: Colors.black),
+          label: const Text(
             Strings.share,
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 16.0),
+            style: TextStyle(fontSize: 16, color: Colors.black),
           ),
-          textColor: Colors.black,
-          padding: const EdgeInsets.all(Dimens.halfDefaultSpacing),
         ),
-        FlatButton.icon(
+        TextButton.icon(
           onPressed: () {
             Navigator.pop(context, ShareOrCopyQuoteDialogResult.copy);
           },
-          icon: Icon(Icons.content_copy),
-          label: Text(
+          icon: const Icon(Icons.content_copy),
+          label: const Text(
             Strings.copy,
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 16.0),
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.black,
+            ),
           ),
-          textColor: Colors.black,
-          padding: const EdgeInsets.all(Dimens.halfDefaultSpacing),
+          style: TextButton.styleFrom(
+            padding: const EdgeInsets.all(Dimens.halfDefaultSpacing),
+          ),
         ),
       ],
     );

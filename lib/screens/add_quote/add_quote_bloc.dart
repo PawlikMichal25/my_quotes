@@ -27,7 +27,7 @@ class AddQuoteBloc extends Bloc {
     _authors.add(Resource.success(data: results));
   }
 
-  Future<Quote> addQuote({String content, Author author}) {
+  Future<Quote> addQuote({required String content, required Author author}) {
     return _quotesDatabase.addQuote(Quote(content: content, author: author));
   }
 }

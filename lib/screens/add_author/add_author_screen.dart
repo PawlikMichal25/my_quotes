@@ -4,20 +4,20 @@ import 'package:my_quotes/commons/resources/strings.dart';
 import 'package:my_quotes/commons/widgets/toast.dart';
 import 'package:my_quotes/injection/service_location.dart';
 
-import 'add_author_bloc.dart';
+import 'package:my_quotes/screens/add_author/add_author_bloc.dart';
 
 class AddAuthorScreen extends StatefulWidget {
   @override
-  _AddAuthorScreenState createState() => _AddAuthorScreenState();
+  State<AddAuthorScreen> createState() => _AddAuthorScreenState();
 }
 
 class _AddAuthorScreenState extends State<AddAuthorScreen> {
-  AddAuthorBloc _addAuthorBloc;
+  late AddAuthorBloc _addAuthorBloc;
 
   bool _firstNameValid = true;
   bool _isAddingAuthor = false;
-  TextEditingController _firstNameController;
-  TextEditingController _lastNameController;
+  late TextEditingController _firstNameController;
+  late TextEditingController _lastNameController;
 
   @override
   void initState() {
@@ -42,7 +42,7 @@ class _AddAuthorScreenState extends State<AddAuthorScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(Strings.add_author),
+        title: const Text(Strings.add_author),
       ),
       body: Column(
         children: [
@@ -52,34 +52,35 @@ class _AddAuthorScreenState extends State<AddAuthorScreen> {
               controller: _firstNameController,
               textCapitalization: TextCapitalization.words,
               decoration: InputDecoration(
-                errorText:
-                    _firstNameValid ? null : Strings.first_name_cant_be_empty,
+                errorText: _firstNameValid ? null : Strings.first_name_cant_be_empty,
                 labelText: Strings.first_name,
               ),
             ),
           ),
           Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: Dimens.defaultSpacing),
+            padding: const EdgeInsets.symmetric(horizontal: Dimens.defaultSpacing),
             child: TextFormField(
               controller: _lastNameController,
               textCapitalization: TextCapitalization.words,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: Strings.last_name,
               ),
             ),
           ),
-          SizedBox(height: Dimens.tripleDefaultSpacing),
+          const SizedBox(height: Dimens.tripleDefaultSpacing),
           _isAddingAuthor
-              ? CircularProgressIndicator()
-              : RaisedButton(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: Dimens.buttonActionPadding),
-                  child: Text(Strings.save),
-                  onPressed: () => _onSaveButtonClicked(),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(Dimens.buttonRadius),
+              ? const CircularProgressIndicator()
+              : ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: Dimens.buttonActionPadding,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(Dimens.buttonRadius),
+                    ),
                   ),
+                  onPressed: _onSaveButtonClicked,
+                  child: const Text(Strings.save),
                 ),
         ],
       ),
@@ -111,7 +112,7 @@ class _AddAuthorScreenState extends State<AddAuthorScreen> {
     }
   }
 
-  void _addAuthor(String firstName, String lastName) async {
+  Future<void> _addAuthor(String firstName, String lastName) async {
     final either = await _addAuthorBloc.addAuthor(
       firstName: firstName,
       lastName: lastName,
@@ -124,7 +125,7 @@ class _AddAuthorScreenState extends State<AddAuthorScreen> {
       setState(() {
         _isAddingAuthor = false;
       });
-      _showFailureToast(either.left);
+      _showFailureToast(either.left!);
     }
   }
 
@@ -132,7 +133,7 @@ class _AddAuthorScreenState extends State<AddAuthorScreen> {
     Toast.show(
       message: message,
       context: context,
-      icon: Icon(Icons.done, color: Colors.white),
+      icon: const Icon(Icons.done, color: Colors.white),
       backgroundColor: Colors.green,
     );
   }
@@ -141,7 +142,7 @@ class _AddAuthorScreenState extends State<AddAuthorScreen> {
     Toast.show(
       message: message,
       context: context,
-      icon: Icon(Icons.close, color: Colors.white),
+      icon: const Icon(Icons.close, color: Colors.white),
       backgroundColor: Colors.red,
     );
   }

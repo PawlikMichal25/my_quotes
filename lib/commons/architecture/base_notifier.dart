@@ -5,6 +5,8 @@ class BaseNotifier<S> extends ChangeNotifier {
 
   S get state => _state;
 
+  BaseNotifier(this._state);
+
   void updateState(S state) {
     _state = state;
   }

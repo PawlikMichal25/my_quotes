@@ -8,27 +8,26 @@ import 'package:my_quotes/injection/service_location.dart';
 import 'package:my_quotes/model/author.dart';
 import 'package:my_quotes/screens/add_author/add_author_screen.dart';
 
-import 'add_quote_bloc.dart';
+import 'package:my_quotes/screens/add_quote/add_quote_bloc.dart';
 
 class AddQuoteScreen extends StatefulWidget {
   @override
-  _AddQuoteScreenState createState() => _AddQuoteScreenState();
+  State<AddQuoteScreen> createState() => _AddQuoteScreenState();
 }
 
 class _AddQuoteScreenState extends State<AddQuoteScreen> {
-  AddQuoteBloc _addQuoteBloc;
-  Author _author;
+  late AddQuoteBloc _addQuoteBloc;
+  Author? _author;
 
   bool _authorValid = true;
   bool _quoteValid = true;
   bool _isAddingQuote = false;
-  TextEditingController _quoteController;
+  final _quoteController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
 
-    _quoteController = TextEditingController();
     _quoteController.addListener(_onQuoteFormChanged);
 
     _addQuoteBloc = sl.get<AddQuoteBloc>();
@@ -45,32 +44,35 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(Strings.add_quote),
-        ),
-        body: StreamBuilder<Resource<List<Author>>>(
-            initialData: Resource.loading(),
-            stream: _addQuoteBloc.authorsStream,
-            builder: (_, AsyncSnapshot<Resource<List<Author>>> snapshot) {
-              final resource = snapshot.data;
+      appBar: AppBar(
+        title: const Text(Strings.add_quote),
+      ),
+      body: StreamBuilder<Resource<List<Author>>>(
+        initialData: Resource.loading(),
+        stream: _addQuoteBloc.authorsStream,
+        builder: (_, AsyncSnapshot<Resource<List<Author>>> snapshot) {
+          final resource = snapshot.data;
 
-              switch (resource.status) {
-                case Status.LOADING:
-                  return _buildProgressIndicator();
-                case Status.SUCCESS:
-                  return Column(
-                    children: [
-                      _buildAuthorRow(resource.data),
-                      _buildQuoteForm(),
-                      SizedBox(height: Dimens.tripleDefaultSpacing),
-                      _buildSaveButton(),
-                    ],
-                  );
-                case Status.ERROR:
-                  return Text(resource.message);
-              }
-              return Text(Strings.unknown_error);
-            }));
+          switch (resource?.status) {
+            case Status.LOADING:
+              return _buildProgressIndicator();
+            case Status.SUCCESS:
+              return Column(
+                children: [
+                  _buildAuthorRow(resource!.data!),
+                  _buildQuoteForm(),
+                  const SizedBox(height: Dimens.tripleDefaultSpacing),
+                  _buildSaveButton(),
+                ],
+              );
+            case Status.ERROR:
+              return Text(resource!.message!);
+            case null:
+              return const Text(Strings.unknown_error);
+          }
+        },
+      ),
+    );
   }
 
   void _onQuoteFormChanged() {
@@ -83,7 +85,7 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
   }
 
   Widget _buildProgressIndicator() {
-    return Center(
+    return const Center(
       child: CircularProgressIndicator(),
     );
   }
@@ -101,7 +103,7 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
     return Padding(
       padding: const EdgeInsets.all(Dimens.defaultSpacing),
       child: FormField<Author>(
-        builder: (FormFieldState state) {
+        builder: (FormFieldState<Author> state) {
           return InputDecorator(
             decoration: InputDecoration(
               labelText: Strings.author,
@@ -113,7 +115,7 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
                 isExpanded: true,
                 value: _author,
                 isDense: true,
-                onChanged: (Author newValue) {
+                onChanged: (Author? newValue) {
                   setState(() {
                     _author = newValue;
                     _authorValid = true;
@@ -141,17 +143,22 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
   Widget _buildAddAuthorButton() {
     return Padding(
       padding: const EdgeInsets.all(Dimens.defaultSpacing),
-      child: RaisedButton(
-        child: Text(Strings.add_new),
+      child: ElevatedButton(
         onPressed: _onAddNewAuthorClick,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(Dimens.buttonRadius),
+        style: ElevatedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Dimens.buttonActionPadding,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(Dimens.buttonRadius),
+          ),
         ),
+        child: const Text(Strings.add_new),
       ),
     );
   }
 
-  void _onAddNewAuthorClick() async {
+  Future<void> _onAddNewAuthorClick() async {
     final author = await Navigator.push<Author>(
       context,
       MaterialPageRoute(builder: (context) => AddAuthorScreen()),
@@ -183,14 +190,16 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
 
   Widget _buildSaveButton() {
     return _isAddingQuote
-        ? CircularProgressIndicator()
-        : RaisedButton(
-            padding: const EdgeInsets.symmetric(horizontal: Dimens.buttonActionPadding),
-            child: Text(Strings.save),
+        ? const CircularProgressIndicator()
+        : ElevatedButton(
             onPressed: () => _onSaveButtonClicked(),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(Dimens.buttonRadius),
+            style: ElevatedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(horizontal: Dimens.buttonActionPadding),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(Dimens.buttonRadius),
+              ),
             ),
+            child: const Text(Strings.save),
           );
   }
 
@@ -219,10 +228,10 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
     }
   }
 
-  void _addQuote(String content) async {
+  Future<void> _addQuote(String content) async {
     final quote = await _addQuoteBloc.addQuote(
       content: content,
-      author: _author,
+      author: _author!,
     );
 
     _showSuccessToast(Strings.quote_created);
@@ -233,7 +242,7 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
     Toast.show(
       message: message,
       context: context,
-      icon: Icon(Icons.done, color: Colors.white),
+      icon: const Icon(Icons.done, color: Colors.white),
       backgroundColor: Colors.green,
     );
   }

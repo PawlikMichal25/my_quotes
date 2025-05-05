@@ -11,38 +11,40 @@ import 'package:my_quotes/model/quote.dart';
 import 'package:my_quotes/commons/architecture/resource.dart';
 import 'package:my_quotes/screens/edit_quote/edit_quote_screen.dart';
 import 'package:provider/provider.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 
-import 'quotes_tab_bloc.dart';
+import 'package:my_quotes/tabs/quotes/quotes_tab_bloc.dart';
 
 class QuotesTab extends StatelessWidget {
-  final Function onDataChanged;
+  final VoidCallback onDataChanged;
 
-  QuotesTab({@required this.onDataChanged});
+  const QuotesTab({required this.onDataChanged});
 
   @override
   Widget build(BuildContext context) {
     final bloc = Provider.of<QuotesTabBloc>(context);
     return StreamBuilder<Resource<List<Quote>>>(
-        initialData: Resource.loading(),
-        stream: bloc.quotesStream,
-        builder: (_, AsyncSnapshot<Resource<List<Quote>>> snapshot) {
-          final resource = snapshot.data;
+      initialData: Resource.loading(),
+      stream: bloc.quotesStream,
+      builder: (_, AsyncSnapshot<Resource<List<Quote>>> snapshot) {
+        final resource = snapshot.data;
 
-          switch (resource.status) {
-            case Status.LOADING:
-              return _buildProgressIndicator();
-            case Status.SUCCESS:
-              return _buildSuccessBody(resource.data);
-            case Status.ERROR:
-              return Text(resource.message);
-          }
-          return Text(Strings.unknown_error);
-        });
+        switch (resource?.status) {
+          case Status.LOADING:
+            return _buildProgressIndicator();
+          case Status.SUCCESS:
+            return _buildSuccessBody(resource!.data!);
+          case Status.ERROR:
+            return Text(resource!.message!);
+          case null:
+            return const Text(Strings.unknown_error);
+        }
+      },
+    );
   }
 
   Widget _buildProgressIndicator() {
-    return Center(
+    return const Center(
       child: CircularProgressIndicator(),
     );
   }
@@ -62,15 +64,15 @@ class QuotesTab extends StatelessWidget {
         children: [
           Icon(
             MyQuotesIcons.quotes,
-            size: 120.0,
+            size: 120,
             color: Styles.lightGrey,
           ),
-          SizedBox(height: Dimens.halfDefaultSpacing),
+          const SizedBox(height: Dimens.halfDefaultSpacing),
           Text(
             Strings.no_quotes,
             style: TextStyle(
               color: Styles.lightGrey,
-              fontSize: 16.0,
+              fontSize: 16,
             ),
           ),
         ],
@@ -108,15 +110,15 @@ class QuotesTab extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  '${quote.content}',
+                  quote.content,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
-                    fontSize: 16.0,
+                    fontSize: 16,
                     fontStyle: FontStyle.italic,
                   ),
                 ),
-                SizedBox(height: Dimens.halfDefaultSpacing),
+                const SizedBox(height: Dimens.halfDefaultSpacing),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -133,14 +135,15 @@ class QuotesTab extends StatelessWidget {
 
   Future<void> _onCardClicked(BuildContext context, Quote quote) async {
     await Navigator.push(
-        context,
-        MaterialPageRoute<void>(
-          builder: (context) => EditQuoteScreen(quote: quote),
-        ));
+      context,
+      MaterialPageRoute<void>(
+        builder: (context) => EditQuoteScreen(quote: quote),
+      ),
+    );
     onDataChanged();
   }
 
-  void _onCardLongPressed(BuildContext context, Quote quote) async {
+  Future<void> _onCardLongPressed(BuildContext context, Quote quote) async {
     final formattedQuote = PresentationFormatter.formatQuoteForSharing(quote);
     final result = await showDialog<ShareOrCopyQuoteDialogResult>(
       context: context,
@@ -151,17 +154,17 @@ class QuotesTab extends StatelessWidget {
 
     switch (result) {
       case ShareOrCopyQuoteDialogResult.share:
-        await Share.share(formattedQuote);
-        break;
+        await SharePlus.instance.share(ShareParams(text: formattedQuote));
       case ShareOrCopyQuoteDialogResult.copy:
         await Clipboard.setData(ClipboardData(text: formattedQuote));
         Toast.show(
           message: Strings.quote_copied_to_clipboard,
           context: context,
-          icon: Icon(Icons.done, color: Colors.white),
+          icon: const Icon(Icons.done, color: Colors.white),
           backgroundColor: Colors.green,
         );
-        break;
+      case null:
+      // do nothing
     }
   }
 }

@@ -9,22 +9,21 @@ import 'package:provider/provider.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
-  _SearchScreenState createState() => _SearchScreenState();
+  State<SearchScreen> createState() => _SearchScreenState();
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  TextEditingController _searchController;
+  final _searchController = TextEditingController();
 
-  QuotesTabBloc _quotesTabBloc;
+  late QuotesTabBloc _quotesTabBloc;
 
   @override
   void initState() {
     super.initState();
-    _searchController = TextEditingController();
     _searchController.addListener(() => _onSearchQueryChanged(false));
 
-    final _quotesTabBlocProvider = sl.get<QuotesTabBlocProvider>();
-    _quotesTabBloc = _quotesTabBlocProvider.get();
+    final quotesTabBlocProvider = sl.get<QuotesTabBlocProvider>();
+    _quotesTabBloc = quotesTabBlocProvider.get();
   }
 
   @override
@@ -54,8 +53,8 @@ class _SearchScreenState extends State<SearchScreen> {
       controller: _searchController,
       autofocus: true,
       cursorColor: Colors.white,
-      style: TextStyle(color: Colors.white),
-      decoration: InputDecoration(
+      style: const TextStyle(color: Colors.white),
+      decoration: const InputDecoration(
         hintText: Strings.search_hint,
         hintStyle: TextStyle(color: Colors.white),
       ),

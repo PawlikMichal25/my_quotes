@@ -2,8 +2,8 @@ enum Status { LOADING, SUCCESS, ERROR }
 
 class Resource<T> {
   final Status status;
-  final T data;
-  final String message;
+  final T? data;
+  final String? message;
 
   Resource._(this.status, [this.data, this.message]);
 
@@ -11,15 +11,15 @@ class Resource<T> {
     return Resource<T>._(Status.LOADING);
   }
 
-  factory Resource.success({T data}) {
+  factory Resource.success({required T data}) {
     return Resource<T>._(Status.SUCCESS, data, null);
   }
 
-  factory Resource.error({String message}) {
+  factory Resource.error({required String message}) {
     return Resource<T>._(Status.ERROR, null, message);
   }
 
-  factory Resource.from(Status status, {T data, String message}) {
+  factory Resource.from(Status status, {required T data, required String message}) {
     return Resource<T>._(status, data, message);
   }
 
