@@ -1,3 +1,6 @@
+import 'package:flutter/foundation.dart';
+
+@immutable
 class Either<L, R> {
   L? _left;
   R? _right;

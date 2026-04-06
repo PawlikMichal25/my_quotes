@@ -22,7 +22,7 @@ class AuthorsTab extends StatelessWidget {
     return StreamBuilder<Resource<List<Author>>>(
       initialData: Resource.loading(),
       stream: bloc.authorsStream,
-      builder: (_, AsyncSnapshot<Resource<List<Author>>> snapshot) {
+      builder: (_, snapshot) {
         final resource = snapshot.data;
 
         switch (resource?.status) {
@@ -82,7 +82,7 @@ class AuthorsTab extends StatelessWidget {
           height: 0,
           color: Styles.darkGrey,
         ),
-        itemBuilder: (BuildContext context, int index) {
+        itemBuilder: (context, index) {
           final author = authors[index];
 
           return _buildAuthorTile(context, author);

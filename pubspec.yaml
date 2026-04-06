@@ -5,19 +5,19 @@ version: 1.2.2+122
 
 environment:
   sdk: ">=3.2.0 <4.0.0"
-  flutter: 3.29.3
+  flutter: 3.41.6
 
 dependencies:
   flutter:
     sdk: flutter
 
-  provider: 6.1.5
-  get_it: 8.0.3
+  provider: 6.1.5+1
+  get_it: 9.2.1
   rxdart: 0.28.0
   hive: 2.2.3
   path_provider: 2.1.5
-  share_plus: 11.0.0
-  url_launcher: 6.3.1
+  share_plus: 12.0.2
+  url_launcher: 6.3.2
 
   collection: any
 dev_dependencies:

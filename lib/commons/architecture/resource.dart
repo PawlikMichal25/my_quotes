@@ -1,5 +1,8 @@
+import 'package:flutter/foundation.dart';
+
 enum Status { LOADING, SUCCESS, ERROR }
 
+@immutable
 class Resource<T> {
   final Status status;
   final T? data;

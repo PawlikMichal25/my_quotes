@@ -50,7 +50,7 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
       body: StreamBuilder<Resource<List<Author>>>(
         initialData: Resource.loading(),
         stream: _addQuoteBloc.authorsStream,
-        builder: (_, AsyncSnapshot<Resource<List<Author>>> snapshot) {
+        builder: (_, snapshot) {
           final resource = snapshot.data;
 
           switch (resource?.status) {
@@ -103,7 +103,7 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
     return Padding(
       padding: const EdgeInsets.all(Dimens.defaultSpacing),
       child: FormField<Author>(
-        builder: (FormFieldState<Author> state) {
+        builder: (state) {
           return InputDecorator(
             decoration: InputDecoration(
               labelText: Strings.author,
@@ -115,14 +115,14 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
                 isExpanded: true,
                 value: _author,
                 isDense: true,
-                onChanged: (Author? newValue) {
+                onChanged: (newValue) {
                   setState(() {
                     _author = newValue;
                     _authorValid = true;
                     state.didChange(newValue);
                   });
                 },
-                items: authors.map((Author author) {
+                items: authors.map((author) {
                   return DropdownMenuItem(
                     value: author,
                     child: Text(

@@ -1,6 +1,7 @@
 plugins {
     id "com.android.application"
     id "dev.flutter.flutter-gradle-plugin"
+    id "kotlin-android"
 }
 
 def localProperties = new Properties()
@@ -28,12 +29,12 @@ if (flutterVersionName == null) {
 }
 
 android {
-    compileSdk 35
+    compileSdk 36
 
     defaultConfig {
         applicationId "io.blacklagoonapps.quotes"
-        minSdkVersion 23
-        targetSdk 35
+        minSdkVersion flutter.minSdkVersion
+        targetSdk 36
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }

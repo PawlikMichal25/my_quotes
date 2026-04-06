@@ -79,7 +79,7 @@ class _ToastState extends State<_Toast> with SingleTickerProviderStateMixin {
 
   Future<void> _scheduleFadeOut() async {
     await Future<void>.delayed(const Duration(milliseconds: 1500));
-    _animationController.reverse();
+    await _animationController.reverse();
   }
 
   @override

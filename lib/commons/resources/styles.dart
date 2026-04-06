@@ -18,7 +18,9 @@ class Styles {
       cursorColor: Colors.orange[800],
       selectionHandleColor: Colors.orange[800],
     ),
-    indicatorColor: Colors.white,
+    tabBarTheme: const TabBarThemeData(
+      indicatorColor: Colors.white,
+    ),
     floatingActionButtonTheme: _floatingActionButtonTheme,
   );
 
